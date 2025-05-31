@@ -8,5 +8,6 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 USER airflow
-COPY requirements.txt /tmp/
-RUN  pip install -r /tmp/requirements.txt 
+COPY requirements.txt /
+RUN pip install --no-cache-dir -r /requirements.txt \
+    && pip install --no-cache-dir cloudscraper 

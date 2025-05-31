@@ -27,7 +27,7 @@ dag = DAG(
     'web_scraping_pipeline',
     default_args=default_args,
     description='Web scraping pipeline for collecting and processing data',
-    schedule_interval='0 0 * * *',  # 每天午夜執行
+    schedule_interval='0 * * * *',  # 每小時整點執行
     catchup=False
 )
 
