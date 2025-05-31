@@ -9,7 +9,7 @@ export function useQuiz() {
 	const naturalQuestions = [
 		{
 			id: 1,
-			text: "週末想去商圈，你偏好什麼時間？",
+			text: "週末出門玩，你喜歡什麼時候去逛街？",
 			subtitle: "選擇你最喜歡的時段",
 			options: [
 				{
@@ -23,7 +23,7 @@ export function useQuiz() {
 					id: "night",
 					text: "夜晚覓食",
 					emoji: "🌙",
-					description: "我偏愛夜市熱鬧氛圍，品嚐美食和夜生活",
+					description: "我喜歡夜市熱鬧氛圍，品嚐美食和夜生活",
 					score: { timePreference: "night" },
 				},
 			],
@@ -379,7 +379,7 @@ export function useQuiz() {
 		},
 		N: {
 			name: "文青生活家",
-			description: "你熱愛創意與美學的文藝青年",
+			description: "你是熱愛創意與美學的文藝青年",
 			tagline: "推薦商圈：大稻埕、西門町商圈",
 		},
 		S: {
@@ -394,7 +394,7 @@ export function useQuiz() {
 		},
 		M: {
 			name: "美食獵人",
-			description: "你熱愛探索美食的饕客",
+			description: "你是熱愛探索美食的饕客",
 			tagline: "推薦商圈：士林夜市、西門町商圈",
 		},
 		P: {
@@ -409,7 +409,7 @@ export function useQuiz() {
 		},
 		K: {
 			name: "夜生活玩家",
-			description: "你熱愛夜生活的潮流先鋒",
+			description: "你是熱愛夜生活的潮流先鋒",
 			tagline: "推薦商圈：信義商圈、東區商圈",
 		},
 	};

@@ -2,26 +2,33 @@
 	<div class="quiz-result">
 		<div class="quiz-result-header">
 			<h2>🎯 你的類型：{{ result.name }}</h2>
-			<p class="result-description">{{ result.description }}</p>
-			<p class="result-tagline">{{ result.tagline }}</p>
-
-			<!-- 簡化的個性洞察區域 -->
-			<div
-				v-if="
+			<br />
+			<h4 class="result-description">{{ result.description }}</h4>
+			<p class="result-insights">
+				{{
 					result.personalityInsights &&
 					result.personalityInsights.length > 0
-				"
-				class="personality-insights"
-			>
-				<h5>💡 個性洞察</h5>
-				<ul class="insights-list">
-					<li
-						v-for="insight in result.personalityInsights"
-						:key="insight"
+						? result.personalityInsights.join("，")
+						: ""
+				}}
+			</p>
+
+			<!-- 推薦商圈區域 -->
+			<div class="recommended-districts-info">
+				<div class="districts-inline">
+					<span class="label">推薦：</span>
+					<span
+						v-for="(district, index) in recommendedDistricts"
+						:key="district.id"
+						class="district-link"
+						@click="showDistrictInfo(district)"
 					>
-						{{ insight }}
-					</li>
-				</ul>
+						{{ district.name }}
+						{{
+							index < recommendedDistricts.length - 1 ? "、" : ""
+						}}
+					</span>
+				</div>
 			</div>
 		</div>
 
@@ -38,6 +45,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import { useDialogStore } from "../../store/dialogStore";
 
 const props = defineProps({
 	result: {
@@ -52,12 +60,35 @@ const props = defineProps({
 
 const emit = defineEmits(["restart", "show-detail"]);
 
+const dialogStore = useDialogStore();
+
 function showDetail(district) {
 	emit("show-detail", district);
 }
 
 function restart() {
 	emit("restart");
+}
+
+function showDistrictInfo(district) {
+	// 設置商圈資訊到 dialog store
+	dialogStore.districtInfoContent = {
+		districtName: district.name,
+		description: district.description,
+		location: district.location,
+		tags: district.tags,
+		highlights: district.highlights,
+		transportation: district.transportation,
+		spending: district.spending,
+		timing: district.timing,
+		image: district.image,
+		rating: district.rating,
+		// 可以在這裡添加活動資訊，暫時為空
+		events: [],
+	};
+
+	// 顯示對話框
+	dialogStore.dialogs.districtInfo = true;
 }
 
 function handleImageError(event) {
@@ -90,7 +121,7 @@ function handleImageError(event) {
 
 	h2 {
 		color: white;
-		font-size: 17px;
+		font-size: 20px;
 		font-weight: 700;
 		margin-bottom: 6px;
 		line-height: 1.3;
@@ -98,53 +129,61 @@ function handleImageError(event) {
 
 	.result-description {
 		color: white;
-		font-size: 13px;
+		font-size: 16px;
 		line-height: 1.4;
 		opacity: 0.85;
 		margin-bottom: 4px;
 		text-align: center;
 	}
 
-	.result-tagline {
+	.result-insights {
 		color: white;
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 1.3;
 		opacity: 0.7;
 		margin-bottom: 12px;
 		text-align: center;
 	}
 
-	.personality-insights {
-		margin-top: 12px;
+	.recommended-districts-info {
+		margin-top: 20px;
 		background: rgba(255, 255, 255, 0.05);
 		border-radius: 8px;
 		padding: 10px 12px;
 		border: 1px solid rgba(255, 255, 255, 0.1);
 
-		h5 {
-			color: white;
-			font-size: 13px;
-			font-weight: 600;
-			margin-bottom: 6px;
+		.districts-inline {
 			text-align: center;
-		}
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 2px;
 
-		.insights-list {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			text-align: center;
-
-			li {
+			.label {
 				color: white;
-				font-size: 11px;
-				line-height: 1.5;
-				opacity: 0.8;
-				margin-bottom: 4px;
-				position: relative;
+				font-size: 13px;
+				font-weight: 600;
+				margin-right: 6px;
+			}
 
-				&:last-child {
-					margin-bottom: 0;
+			.district-link {
+				color: var(--color-highlight);
+				font-size: 13px;
+				font-weight: 600;
+				cursor: pointer;
+				position: relative;
+				display: inline;
+				transition: all 0.3s ease;
+
+				&:hover {
+					color: white;
+					text-shadow: 0 0 8px var(--color-highlight);
+					transform: scale(1.05);
+				}
+
+				&:active {
+					transform: scale(0.98);
 				}
 			}
 		}
@@ -161,9 +200,9 @@ function handleImageError(event) {
 	h3 {
 		flex-shrink: 0;
 		color: white;
-		font-size: 15px;
+		font-size: 16px;
 		font-weight: 600;
-		margin-bottom: 8px;
+		margin-bottom: 10px;
 		text-align: center;
 	}
 
@@ -273,19 +312,30 @@ function handleImageError(event) {
 			.district-info {
 				padding: 12px;
 
-				h4 {
-					color: white;
-					font-size: 14px;
-					font-weight: 600;
+				.clickable-title {
+					color: var(--color-highlight);
+					font-size: 15px;
+					font-weight: 700;
 					margin-bottom: 6px;
 					line-height: 1.3;
+					cursor: pointer;
+					transition: all 0.3s ease;
+					text-decoration: underline;
+					text-underline-offset: 2px;
+					text-decoration-thickness: 1px;
+
+					&:hover {
+						color: white;
+						text-shadow: 0 0 8px var(--color-highlight);
+						transform: scale(1.02);
+					}
 				}
 
 				.district-tags {
 					display: flex;
 					flex-wrap: wrap;
 					gap: 4px;
-					margin-bottom: 8px;
+					margin-bottom: 10px;
 
 					.tag {
 						padding: 2px 6px;
@@ -330,7 +380,7 @@ function handleImageError(event) {
 .quiz-result-footer {
 	flex-shrink: 0;
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
-	padding-top: 10px;
+	padding-top: 8px;
 
 	.result-actions {
 		display: flex;
@@ -340,10 +390,10 @@ function handleImageError(event) {
 			display: flex;
 			align-items: center;
 			gap: 6px;
-			padding: 10px 24px;
+			padding: 10px 16px;
 			border: 1px solid rgba(255, 255, 255, 0.2);
 			border-radius: 20px;
-			font-size: 12px;
+			font-size: 11px;
 			font-weight: 500;
 			cursor: pointer;
 			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -395,28 +445,27 @@ function handleImageError(event) {
 			font-size: 13px;
 		}
 
-		.result-tagline {
+		.result-insights {
 			font-size: 12px;
 		}
 
-		.personality-insights {
+		.recommended-districts-info {
 			margin-top: 12px;
 			padding: 10px 12px;
 
-			h5 {
-				font-size: 13px;
+			.districts-inline .label {
+				font-size: 12px;
 			}
 
-			.insights-list li {
-				font-size: 11px;
-				margin-bottom: 4px;
+			.districts-inline .district-link {
+				font-size: 12px;
 			}
 		}
 	}
 
 	.quiz-result-content {
 		h3 {
-			font-size: 15px;
+			font-size: 16px;
 			margin-bottom: 10px;
 		}
 
@@ -432,8 +481,8 @@ function handleImageError(event) {
 				.district-info {
 					padding: 12px;
 
-					h4 {
-						font-size: 14px;
+					.clickable-title {
+						font-size: 15px;
 						margin-bottom: 6px;
 					}
 
@@ -491,9 +540,12 @@ function handleImageError(event) {
 			font-size: 15px;
 		}
 
-		.personality-insights .insights-list li {
-			font-size: 10px;
-			padding-left: 12px;
+		.recommended-districts-info .districts-inline .district-link {
+			font-size: 11px;
+		}
+
+		.recommended-districts-info .districts-inline .label {
+			font-size: 11px;
 		}
 	}
 
