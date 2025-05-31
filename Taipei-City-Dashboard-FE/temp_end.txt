@@ -1,37 +1,4 @@
-<!-- Developed by Taipei Urban Intelligence Center 2023-2024-->
-
-<script setup>
-import { computed, ref } from "vue";
-import { districtCoordinates } from "../utilities/districtCoordinates";
-import { useDialogStore } from "../../store/dialogStore";
-import { getRealMarketData } from "../../components/taipei_event/realMarketData.js";  // 新增這行
-
-const props = defineProps([
-	"chart_config",
-	"activeChart",
-	"activeCity",
-	"series",
-	"map_config",
-	"map_filter",
-	"map_filter_on",
-]);
-
-const emits = defineEmits([
-	"filterByParam",
-	"filterByLayer",
-	"clearByParamFilter",
-	"clearByLayerFilter",
-	"fly"
-]);
-
-const dialogStore = useDialogStore();  // 新增這行
-const targetDistrict = ref(null);
-const districtColor = ref(props.chart_config.color[0]);
-const mousePosition = ref({ x: null, y: null });
-const selectedIndex = ref(null);
-
-// 真實市集活動資料 - 來自CSV檔案
-const districtEvents = getRealMarketData();
+};
 
 const cities = [
 	{ name: "臺北市", value: "taipei" },
@@ -138,52 +105,30 @@ const districtData = computed(() => {
 	};
 	let highest = 0;
 	let sum = 0;
-	
-	// 首先使用真實市集資料計算每個行政區的活動數量
-	let marketDataUsed = false;
-	Object.keys(districtEvents).forEach(district => {
-		const eventCount = districtEvents[district]?.length || 0;
-		if (output.hasOwnProperty(district)) {
-			output[district] = eventCount;
-			if (eventCount > 0) {
-				marketDataUsed = true;
+	if (props.series.length === 1) {
+		props.series[0].data.forEach((item) => {
+			output[item.x] = item.y;
+			if (item.y > highest) {
+				highest = item.y;
 			}
-			if (eventCount > highest) {
-				highest = eventCount;
+			sum += item.y;
+		});
+	} else {
+		props.series.forEach((serie) => {
+			for (let i = 0; i < props.chart_config.categories.length; i++) {
+				if (!output[props.chart_config.categories[i]]) {
+					output[props.chart_config.categories[i]] = 0;
+				}
+				output[props.chart_config.categories[i]] += +serie.data[i];
 			}
-			sum += eventCount;
-		}
-	});
-	
-	// 如果沒有市集資料，回退到原始 props.series 資料
-	if (!marketDataUsed && props.series && props.series.length > 0) {
-		highest = 0;
-		sum = 0;
-		if (props.series.length === 1) {
-			props.series[0].data.forEach((item) => {
-				output[item.x] = item.y;
-				if (item.y > highest) {
-					highest = item.y;
-				}
-				sum += item.y;
-			});
-		} else {
-			props.series.forEach((serie) => {
-				for (let i = 0; i < props.chart_config.categories.length; i++) {
-					if (!output[props.chart_config.categories[i]]) {
-						output[props.chart_config.categories[i]] = 0;
-					}
-					output[props.chart_config.categories[i]] += +serie.data[i];
-				}
-			});
-			highest = Object.values(output).sort(function (a, b) {
-				return b - a;
-			})[0];
-			sum = Object.values(output).reduce(
-				(partialSum, a) => partialSum + a,
-				0
-			);
-		}
+		});
+		highest = Object.values(output).sort(function (a, b) {
+			return b - a;
+		})[0];
+		sum = Object.values(output).reduce(
+			(partialSum, a) => partialSum + a,
+			0
+		);
 	}
 
 	output.highest = highest;

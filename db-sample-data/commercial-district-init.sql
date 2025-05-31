@@ -65,7 +65,7 @@ ON CONFLICT (index) DO UPDATE SET
 INSERT INTO public.components (index, name)
 VALUES (
     'commercial_district_density',
-    '商圈密度分布'
+    '市集活動分佈'
 )
 ON CONFLICT (index) DO UPDATE SET
     name = EXCLUDED.name;
@@ -153,9 +153,9 @@ VALUES (
     NULL,
     NULL,
     '商業處',
-    '顯示各行政區商圈密度分布',
-    '此圖表呈現台北市各行政區的商圈密度分布，包括商店數量、商圈規模等指標。透過行政區視覺化，協助了解各區商業發展狀況，為商圈活化政策提供數據支撐。',
-    '可用於商圈政策制定、投資評估與區域發展規劃。適合政府部門評估商圈發展潛力、投資者選址參考，以及商業顧問進行市場分析。',
+    '顯示各行政區市集活動分佈',
+    '此圖表呈現台北市各行政區的市集活動分佈，包括市集數量、展覽活動等指標。透過行政區視覺化，協助了解各區市集活動狀況，為商圈活化政策提供數據支撐。',
+    '可用於市集活動政策制定、投資評估與區域發展規劃。適合政府部門評估市集發展潛力、投資者選址參考，以及商業顧問進行市場分析。',
     '{}',
     '{doit}',
     CURRENT_TIMESTAMP,
@@ -205,9 +205,9 @@ DO $$
 BEGIN
     RAISE NOTICE '=== 商圈活化儀表板初始化完成 ===';
     RAISE NOTICE '儀表板名稱: 商圈活化';
-    RAISE NOTICE '組件數量: 2 (商圈人流分析 + 商圈密度分布)';
+    RAISE NOTICE '組件數量: 2 (商圈人流分析 + 市集活動分佈)';
     RAISE NOTICE '群組權限: taipei';
-    RAISE NOTICE '新增功能: 行政區圖 (商圈密度分布)';
+    RAISE NOTICE '新增功能: 行政區圖 (市集活動分佈)';
     RAISE NOTICE '🔄 更新模式: 支援刷新更新，避免重複新增';
     RAISE NOTICE '請重啟後端服務以載入新配置';
 END $$; 

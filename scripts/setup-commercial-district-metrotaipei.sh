@@ -200,7 +200,7 @@ show_completion_message() {
     echo ""
     echo "📋 部署摘要:"
     echo "  • 儀表板名稱: 商圈活化 (雙北版本)"
-    echo "  • 組件數量: 2 (雙北商圈人流分析 + 雙北商圈密度分布)"
+    echo "  • 組件數量: 2 (雙北商圈人流分析 + 雙北市集活動分佈)"
     echo "  • 權限群組: metrotaipei"
     echo "  • 圖標: store"
     echo "  • 涵蓋範圍: 台北市12區 + 新北市12主要區域"

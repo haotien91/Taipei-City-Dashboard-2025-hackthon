@@ -144,7 +144,7 @@ show_completion_message() {
     echo ""
     echo "📋 部署摘要:"
     echo "  • 儀表板名稱: 商圈活化"
-    echo "  • 組件數量: 2 (商圈人流分析 + 商圈密度分布)"
+    echo "  • 組件數量: 2 (商圈人流分析 + 市集活動分佈)"
     echo "  • 權限群組: taipei"
     echo "  • 圖標: store"
     echo "  • 🔄 刷新模式: 支援重複執行，自動更新資料"

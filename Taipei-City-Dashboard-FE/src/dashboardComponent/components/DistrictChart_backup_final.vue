@@ -3,8 +3,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { districtCoordinates } from "../utilities/districtCoordinates";
-import { useDialogStore } from "../../store/dialogStore";
-import { getRealMarketData } from "../../components/taipei_event/realMarketData.js";  // 新增這行
+import { useDialogStore } from "../../store/dialogStore";  // 新增這行
 
 const props = defineProps([
 	"chart_config",
@@ -30,8 +29,220 @@ const districtColor = ref(props.chart_config.color[0]);
 const mousePosition = ref({ x: null, y: null });
 const selectedIndex = ref(null);
 
-// 真實市集活動資料 - 來自CSV檔案
-const districtEvents = getRealMarketData();
+// 市集、展演活動假資料
+const districtEvents = {
+	// === 台北市 ===
+	'北投區': [
+		{
+			id: 1,
+			name: '北投溫泉市集',
+			type: '市集',
+			location: '北投公園',
+			startTime: '2025-05-31T09:00:00',
+			endTime: '2025-05-31T17:00:00',
+			description: '溫泉美食與手作商品的精彩集合'
+		},
+		{
+			id: 2,
+			name: '北投音樂節',
+			type: '展演',
+			location: '北投文物館',
+			startTime: '2025-06-05T19:00:00',
+			endTime: '2025-06-05T22:00:00',
+			description: '結合溫泉文化的音樂饗宴'
+		}
+	],
+	'士林區': [
+		{
+			id: 3,
+			name: '士林夜市美食節',
+			type: '市集',
+			location: '士林夜市廣場',
+			startTime: '2025-06-01T16:00:00',
+			endTime: '2025-06-01T23:00:00',
+			description: '台北最著名夜市的美食盛會'
+		},
+		{
+			id: 4,
+			name: '陽明山花季音樂會',
+			type: '展演',
+			location: '陽明山公園',
+			startTime: '2025-06-08T15:00:00',
+			endTime: '2025-06-08T18:00:00',
+			description: '在花海中享受優美的音樂演出'
+		}
+	],
+	'信義區': [
+		{
+			id: 5,
+			name: '信義商圈購物節',
+			type: '市集',
+			location: '信義廣場',
+			startTime: "2025-05-31T15:00:00",
+			endTime: "2025-05-31T20:00:00",
+			description: '國際品牌與在地文創的購物饗宴'
+		},
+		{
+			id: 6,
+			name: '台北101藝術展演',
+			type: '展演',
+			location: '台北101',
+			startTime: '2025-06-01T19:30:00',
+			endTime: '2025-06-01T21:30:00',
+			description: '高樓夜景下的精彩表演'
+		}
+	],
+	'中正區': [
+		{
+			id: 7,
+			name: '中正紀念堂文創市集',
+			type: '市集',
+			location: '中正紀念堂自由廣場',
+			startTime: '2025-06-01T08:00:00',
+			endTime: '2025-06-01T18:00:00',
+			description: '傳統與現代交融的文創商品展售'
+		}
+	],
+	'大安區': [
+		{
+			id: 8,
+			name: '大安森林公園假日市集',
+			type: '市集',
+			location: '大安森林公園',
+			startTime: '2025-06-01T09:00:00',
+			endTime: '2025-06-01T16:00:00',
+			description: '綠意盎然的都市綠洲市集'
+		},
+		{
+			id: 9,
+			name: '忠孝東路街頭藝術節',
+			type: '展演',
+			location: '忠孝東路商圈',
+			startTime: '2025-06-07T18:00:00',
+			endTime: '2025-06-07T22:00:00',
+			description: '街頭藝人的精彩演出'
+		}
+	],
+
+	// === 新北市 ===
+	'板橋區': [
+		{
+			id: 10,
+			name: '板橋府中商圈嘉年華',
+			type: '市集',
+			location: '府中15',
+			startTime: '2025-06-02T14:00:00',
+			endTime: '2025-06-02T21:00:00',
+			description: '新北最熱鬧的商圈慶典'
+		},
+		{
+			id: 11,
+			name: '板橋435藝文特區音樂會',
+			type: '展演',
+			location: '板橋435藝文特區',
+			startTime: '2025-06-08T19:00:00',
+			endTime: '2025-06-08T21:30:00',
+			description: '藝文氣息濃厚的音樂饗宴'
+		}
+	],
+	'新莊區': [
+		{
+			id: 12,
+			name: '新莊廟街夜市節',
+			type: '市集',
+			location: '新莊廟街',
+			startTime: '2025-06-04T17:00:00',
+			endTime: '2025-06-04T23:30:00',
+			description: '傳統廟街文化與美食的結合'
+		}
+	],
+	'三重區': [
+		{
+			id: 13,
+			name: '三重幸福水漾公園市集',
+			type: '市集',
+			location: '幸福水漾公園',
+			startTime: '2025-06-06T10:00:00',
+			endTime: '2025-06-06T17:00:00',
+			description: '河濱公園的悠閒假日市集'
+		}
+	],
+	'淡水區': [
+		{
+			id: 14,
+			name: '淡水老街藝術節',
+			type: '展演',
+			location: '淡水老街',
+			startTime: '2025-06-11T16:00:00',
+			endTime: '2025-06-11T20:00:00',
+			description: '古色古香老街的藝術盛會'
+		},
+		{
+			id: 15,
+			name: '淡水漁人碼頭海鮮市集',
+			type: '市集',
+			location: '淡水漁人碼頭',
+			startTime: '2025-06-14T11:00:00',
+			endTime: '2025-06-14T19:00:00',
+			description: '新鮮海產與夕陽美景的完美結合'
+		}
+	],
+	'中和區': [
+		{
+			id: 16,
+			name: '中和環球購物中心週年慶',
+			type: '市集',
+			location: '環球購物中心中和店',
+			startTime: '2025-06-09T10:00:00',
+			endTime: '2025-06-09T22:00:00',
+			description: '大型購物中心的週年慶典活動'
+		}
+	],
+	'永和區': [
+		{
+			id: 17,
+			name: '永和豆漿文化節',
+			type: '市集',
+			location: '永和中正路',
+			startTime: '2025-06-01T07:00:00',
+			endTime: '2025-06-01T14:00:00',
+			description: '台灣豆漿文化的發源地慶典'
+		}
+	],
+	'新店區': [
+		{
+			id: 18,
+			name: '碧潭風景區音樂祭',
+			type: '展演',
+			location: '碧潭風景區',
+			startTime: '2025-06-16T18:30:00',
+			endTime: '2025-06-16T21:00:00',
+			description: '碧潭水岸的浪漫音樂夜'
+		}
+	],
+	'汐止區': [
+		{
+			id: 19,
+			name: '汐止康誥坑溪生態市集',
+			type: '市集',
+			location: '康誥坑溪畔',
+			startTime: '2025-06-05T09:00:00',
+			endTime: '2025-06-05T16:00:00',
+			description: '結合生態保育的環保市集'
+		}
+	],
+	'樹林區': [
+		{
+			id: 20,
+			name: '樹林藝術展演季',
+			type: '展演',
+			location: '樹林藝文中心',
+			startTime: '2025-06-01T14:00:00',
+			endTime: '2025-06-01T17:00:00',
+			description: '地方藝術團體的精彩演出'
+		}
+	]
+};
 
 const cities = [
 	{ name: "臺北市", value: "taipei" },
@@ -138,52 +349,30 @@ const districtData = computed(() => {
 	};
 	let highest = 0;
 	let sum = 0;
-	
-	// 首先使用真實市集資料計算每個行政區的活動數量
-	let marketDataUsed = false;
-	Object.keys(districtEvents).forEach(district => {
-		const eventCount = districtEvents[district]?.length || 0;
-		if (output.hasOwnProperty(district)) {
-			output[district] = eventCount;
-			if (eventCount > 0) {
-				marketDataUsed = true;
+	if (props.series.length === 1) {
+		props.series[0].data.forEach((item) => {
+			output[item.x] = item.y;
+			if (item.y > highest) {
+				highest = item.y;
 			}
-			if (eventCount > highest) {
-				highest = eventCount;
+			sum += item.y;
+		});
+	} else {
+		props.series.forEach((serie) => {
+			for (let i = 0; i < props.chart_config.categories.length; i++) {
+				if (!output[props.chart_config.categories[i]]) {
+					output[props.chart_config.categories[i]] = 0;
+				}
+				output[props.chart_config.categories[i]] += +serie.data[i];
 			}
-			sum += eventCount;
-		}
-	});
-	
-	// 如果沒有市集資料，回退到原始 props.series 資料
-	if (!marketDataUsed && props.series && props.series.length > 0) {
-		highest = 0;
-		sum = 0;
-		if (props.series.length === 1) {
-			props.series[0].data.forEach((item) => {
-				output[item.x] = item.y;
-				if (item.y > highest) {
-					highest = item.y;
-				}
-				sum += item.y;
-			});
-		} else {
-			props.series.forEach((serie) => {
-				for (let i = 0; i < props.chart_config.categories.length; i++) {
-					if (!output[props.chart_config.categories[i]]) {
-						output[props.chart_config.categories[i]] = 0;
-					}
-					output[props.chart_config.categories[i]] += +serie.data[i];
-				}
-			});
-			highest = Object.values(output).sort(function (a, b) {
-				return b - a;
-			})[0];
-			sum = Object.values(output).reduce(
-				(partialSum, a) => partialSum + a,
-				0
-			);
-		}
+		});
+		highest = Object.values(output).sort(function (a, b) {
+			return b - a;
+		})[0];
+		sum = Object.values(output).reduce(
+			(partialSum, a) => partialSum + a,
+			0
+		);
 	}
 
 	output.highest = highest;

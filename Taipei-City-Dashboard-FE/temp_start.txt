@@ -1,0 +1,30 @@
+<!-- Developed by Taipei Urban Intelligence Center 2023-2024-->
+
+<script setup>
+import { computed, ref } from "vue";
+import { districtCoordinates } from "../utilities/districtCoordinates";
+import { useDialogStore } from "../../store/dialogStore";  // 新增這行
+
+const props = defineProps([
+	"chart_config",
+	"activeChart",
+	"activeCity",
+	"series",
+	"map_config",
+	"map_filter",
+	"map_filter_on",
+]);
+
+const emits = defineEmits([
+	"filterByParam",
+	"filterByLayer",
+	"clearByParamFilter",
+	"clearByLayerFilter",
+	"fly"
+]);
+
+const dialogStore = useDialogStore();  // 新增這行
+const targetDistrict = ref(null);
+const districtColor = ref(props.chart_config.color[0]);
+const mousePosition = ref({ x: null, y: null });
+const selectedIndex = ref(null);
