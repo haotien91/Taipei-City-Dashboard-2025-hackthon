@@ -810,10 +810,17 @@ export function useMap(containerId: string) {
 ### [0526-discussion.md](mdc:Reference-for-AI/Hackthon/0526-discussion.md)
 這是我們在 05/26 時討論的結果，包含想法初步發想、初步的執行方案。
 
+### [0531-brainstorm.md](mdc:Reference-for-AI/Hackthon/0531-brainstorm.md)
+這是我們在比賽第一天，針對題目 "商圈活化" 做的 brainstorm 資訊，由 GPT 整理過。
+
+### [0531-deep-research.md](mdc:Reference-for-AI/Hackthon/0531-deep-research.md)
+同上，這是由 Deep Research 深挖後的資料
+
+### [UI-development-reference.md](mdc:Reference-for-AI/Hackthon/UI-development-reference.md)
+這是 UI 設計的最高指導原則，說明了哪些 UI 會被大家喜歡
+
 ### @Reference-for-AI/Docs/*
 這些是專案的實作 Document, 分為 BE (backend), DE, (data-end), FE(front-end) 三個主要區塊，以及 Common (專案基本介紹)
-
-
 
 
 
