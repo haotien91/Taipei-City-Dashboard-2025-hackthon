@@ -27,6 +27,8 @@ chmod +x scripts/setup-commercial-district.sh
 
 # 2. 執行自動化部署
 ./scripts/setup-commercial-district.sh
+./scripts/setup-commercial-district-metrotaipei.sh
+./scripts/setup-commercial-district-with-data.sh
 ```
 
 **就這麼簡單！** 腳本會自動：

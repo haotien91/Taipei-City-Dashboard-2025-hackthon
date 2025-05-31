@@ -2,12 +2,13 @@
 
 # 商圈活化儀表板完整部署腳本 (含假資料)
 # 作者: Taipei City Dashboard Team
-# 版本: 2.0 - 模組化版本
+# 版本: 2.1 - 模組化版本 (支援刷新模式)
 # 日期: 2024-03-21
+# 特色: 模組化部署 + 假資料生成 + 支援重複執行
 
 set -e  # 任何命令失敗就退出
 
-echo "🚀 開始部署商圈活化儀表板 (模組化版本)..."
+echo "🚀 開始部署商圈活化儀表板 (模組化 + 刷新模式)..."
 
 # 顏色定義
 RED='\033[0;31m'
@@ -182,6 +183,7 @@ show_completion_message() {
     echo "  • 組件數量: 1 (商圈人流分析)"
     echo "  • 權限群組: taipei"
     echo "  • 圖標: store"
+    echo "  • 🔄 刷新模式: 支援重複執行，自動更新資料"
     echo "  • 假資料: $(docker exec postgres-data psql -U postgres -d dashboard -t -c "SELECT COUNT(*) FROM commercial_district_flow_data;" | tr -d ' ') 筆商圈人流記錄"
     echo ""
     echo "📊 假資料內容:"
@@ -202,19 +204,27 @@ show_completion_message() {
     echo "  • 易於添加新的分析模組"
     echo "  • 假資料自動生成"
     echo "  • 完整的錯誤檢查"
+    echo "  • ✨ 支援刷新模式，避免重複記錄"
+    echo ""
+    echo "🔄 刷新模式優勢:"
+    echo "  • ✅ 可以安全地多次執行此腳本"
+    echo "  • ✅ 自動更新現有配置，不會產生重複記錄"
+    echo "  • ✅ 適合開發測試階段頻繁更新配置"
+    echo "  • ✅ 模組化組件也支援刷新更新"
     echo ""
     echo "🚀 後續擴展:"
     echo "  • 可使用 scripts/modules/create-component.sh 創建新組件"
     echo "  • 參考 scripts/modules/commercial-district-flow.sh 的模式"
     echo "  • 所有組件都會自動整合到商圈活化儀表板"
+    echo "  • 💡 此腳本支援多次執行，不會產生重複資料"
     echo ""
 }
 
 # 主執行流程
 main() {
     echo "=================================================="
-    echo "  台北城市儀表板 - 商圈活化模組部署工具 v2.0    "
-    echo "               (模組化 + 假資料版本)                "
+    echo "  台北城市儀表板 - 商圈活化模組部署工具 v2.1    "
+    echo "           (模組化 + 假資料 + 刷新模式版本)           "
     echo "=================================================="
     echo ""
     
@@ -226,7 +236,7 @@ main() {
     restart_backend
     show_completion_message
     
-    print_success "🚀 模組化部署完成！"
+    print_success "🚀 模組化部署完成！可重複執行以更新配置"
 }
 
 # 執行主函數
