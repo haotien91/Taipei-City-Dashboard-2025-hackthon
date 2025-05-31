@@ -1,0 +1,494 @@
+{
+  "type": "FeatureCollection",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "圓山花博x168幸福市集",
+        "type": "市集",
+        "district": "中山區",
+        "start_date": "2025-11-28",
+        "end_date": "2025-11-30",
+        "description": "位於圓山花博園區的特色市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.52,
+          25.0708
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "南港瓶蓋工廠-吉刻市集",
+        "type": "市集",
+        "district": "南港區",
+        "start_date": "2025-08-08",
+        "end_date": "2025-08-10",
+        "description": "南港瓶蓋工廠文創市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.6062,
+          25.0555
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "小小地球人市集｜龍山文創",
+        "type": "市集",
+        "district": "萬華區",
+        "start_date": "2025-07-12",
+        "end_date": "2025-07-13",
+        "description": "龍山文創基地特色市集",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.4999,
+          25.0365
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "蜜香紅茶與手作的相遇-安森町主題市集",
+        "type": "市集",
+        "district": "中山區",
+        "start_date": "2025-07-12",
+        "end_date": "2025-07-13",
+        "description": "安森町特色主題市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.53,
+          25.065
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "風格酒食之夜",
+        "type": "市集",
+        "district": "信義區",
+        "start_date": "2025-07-11",
+        "end_date": "2025-07-13",
+        "description": "信義區風格酒食主題活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.565,
+          25.033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "大暑升級 LEVEL UP ~ 龍山夏日市集",
+        "type": "市集",
+        "district": "萬華區",
+        "start_date": "2025-07-05",
+        "end_date": "2025-07-06",
+        "description": "龍山地區夏日特色市集",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.502,
+          25.038
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "心靈綠洲 療癒日",
+        "type": "市集",
+        "district": "中正區",
+        "start_date": "2025-07-05",
+        "end_date": "2025-07-06",
+        "description": "心靈療癒主題市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.518,
+          25.035
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "忠孝敦化第四廣場",
+        "type": "市集",
+        "district": "大安區",
+        "start_date": "2025-07-01",
+        "end_date": "2025-12-31",
+        "description": "忠孝敦化商圈長期市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.548,
+          25.0415
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "日式花火祭典",
+        "type": "市集",
+        "district": "中山區",
+        "start_date": "2025-06-28",
+        "end_date": "2025-06-29",
+        "description": "日式主題花火祭典市集",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.525,
+          25.068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "漢堡大學-漢堡的多重宇宙",
+        "type": "市集",
+        "district": "大安區",
+        "start_date": "2025-06-21",
+        "end_date": "2025-06-22",
+        "description": "漢堡主題創意市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.538,
+          25.028
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "耍廢。甩廢 天生廢材必有用 大安森環保市集",
+        "type": "市集",
+        "district": "大安區",
+        "start_date": "2025-06-21",
+        "end_date": "2025-06-22",
+        "description": "大安森林公園環保主題市集",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5362,
+          25.033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "June Together 年中大會師",
+        "type": "市集",
+        "district": "信義區",
+        "start_date": "2025-06-14",
+        "end_date": "2025-06-15",
+        "description": "年中大會師主題市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.562,
+          25.035
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "JAZZ UP! 爵士樂生活",
+        "type": "市集",
+        "district": "中山區",
+        "start_date": "2025-06-07",
+        "end_date": "2025-06-08",
+        "description": "爵士樂主題生活市集",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.528,
+          25.062
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "南村夏日子",
+        "type": "市集",
+        "district": "信義區",
+        "start_date": "2025-05-01",
+        "end_date": "2025-06-30",
+        "description": "南村夏日特色市集活動",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.56,
+          25.032
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "夢想寄售店-東區地下街",
+        "type": "市集",
+        "district": "大安區",
+        "start_date": "2025-04-01",
+        "end_date": "2025-08-31",
+        "description": "東區地下街夢想寄售店",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.545,
+          25.042
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "///斜槓自由市///",
+        "type": "市集",
+        "district": "中正區",
+        "start_date": "2025-04-01",
+        "end_date": "2025-11-30",
+        "description": "免攤位費的斜槓自由市集",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.515,
+          25.038
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "東森廣場k區東廣場",
+        "type": "市集",
+        "district": "內湖區",
+        "start_date": "2025-09-01",
+        "end_date": "2025-10-31",
+        "description": "東森廣場寄售市集活動",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.578,
+          25.068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "眾樂樂文創市集",
+        "type": "市集",
+        "district": "松山區",
+        "start_date": "2025-07-25",
+        "end_date": "2025-07-27",
+        "description": "松山區文創主題市集",
+        "status": "active",
+        "event_status": "not_started",
+        "status_color": "#2196F3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.552,
+          25.05
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "台北天文館",
+        "type": "展覽活動",
+        "district": "士林區",
+        "start_date": "2025-05-30",
+        "end_date": "2025-06-01",
+        "description": "燭龍現身臺北天文館！端午連假別錯過神話與科學的奇幻旅程",
+        "status": "active",
+        "event_status": "ending_3days",
+        "status_color": "#F44336"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.518,
+          25.0958
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "台北文學館籌備處",
+        "type": "展覽活動",
+        "district": "中正區",
+        "start_date": "2025-05-28",
+        "end_date": "2025-07-20",
+        "description": "2025臺北文學館籌備處「想像一間 #______文學館」展覽",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.527,
+          25.0158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "士林文化園區",
+        "type": "展覽活動",
+        "district": "士林區",
+        "start_date": "2025-05-23",
+        "end_date": "2025-07-31",
+        "description": "士林好神！2025再出發：打造文化共感X永續生活圈",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.526,
+          25.0978
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "當代藝術館",
+        "type": "展覽活動",
+        "district": "大同區",
+        "start_date": "2025-05-22",
+        "end_date": "2025-06-22",
+        "description": "此身，未竟之境 BODY–Where we are at",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.508,
+          25.0539
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "松山文創園區",
+        "type": "展覽活動",
+        "district": "信義區",
+        "start_date": "2025-04-09",
+        "end_date": "2025-06-17",
+        "description": "2025松山文創學園祭 逐光啟程：Highlight",
+        "status": "active",
+        "event_status": "active",
+        "status_color": "#4CAF50"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.561,
+          25.0438
+        ]
+      }
+    }
+  ]
+}
