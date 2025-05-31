@@ -1,0 +1,119 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "flow_id": "mrt_to_ximending",
+        "origin": "台北車站",
+        "destination": "西門町商圈",
+        "flow_volume": 8500,
+        "peak_hour": "19:00",
+        "transport_mode": "捷運",
+        "avg_duration": 5
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.517532, 25.047936],
+          [121.507885, 25.043605]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "flow_id": "xinyi_to_101",
+        "origin": "市政府捷運站",
+        "destination": "台北101",
+        "flow_volume": 12000,
+        "peak_hour": "12:00",
+        "transport_mode": "步行",
+        "avg_duration": 10
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.567755, 25.041356],
+          [121.564837, 25.033976]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "flow_id": "jiantan_to_shilin",
+        "origin": "劍潭捷運站",
+        "destination": "士林夜市",
+        "flow_volume": 6800,
+        "peak_hour": "18:00",
+        "transport_mode": "步行",
+        "avg_duration": 8
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.525063, 25.084873],
+          [121.525389, 25.088523]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "flow_id": "daan_to_yongkang",
+        "origin": "大安森林公園站",
+        "destination": "永康商圈",
+        "flow_volume": 4200,
+        "peak_hour": "13:00",
+        "transport_mode": "YouBike",
+        "avg_duration": 6
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.534847, 25.033311],
+          [121.529835, 25.033789]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "flow_id": "ximending_interconnect",
+        "origin": "西門町電影街",
+        "destination": "西門紅樓",
+        "flow_volume": 3500,
+        "peak_hour": "20:00",
+        "transport_mode": "步行",
+        "avg_duration": 3
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.507885, 25.043605],
+          [121.506972, 25.041875]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "flow_id": "xinyi_shopping_route",
+        "origin": "新光三越A11",
+        "destination": "微風信義",
+        "flow_volume": 5600,
+        "peak_hour": "15:00",
+        "transport_mode": "步行",
+        "avg_duration": 5
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [121.565327, 25.035123],
+          [121.56676, 25.03589]
+        ]
+      }
+    }
+  ]
+}

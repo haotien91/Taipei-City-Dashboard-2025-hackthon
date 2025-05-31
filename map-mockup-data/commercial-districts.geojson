@@ -1,0 +1,105 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "district_id": "ximending",
+        "name": "西門町商圈",
+        "type": "商圈",
+        "visitor_count": 45000,
+        "shop_count": 320,
+        "avg_spending": 850,
+        "category": "娛樂購物",
+        "peak_hours": "14:00-22:00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [121.50682, 25.04239],
+            [121.50895, 25.04239],
+            [121.50895, 25.04482],
+            [121.50682, 25.04482],
+            [121.50682, 25.04239]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district_id": "xinyi",
+        "name": "信義商圈",
+        "type": "商圈",
+        "visitor_count": 62000,
+        "shop_count": 450,
+        "avg_spending": 1200,
+        "category": "精品購物",
+        "peak_hours": "11:00-21:00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [121.563, 25.033],
+            [121.57, 25.033],
+            [121.57, 25.037],
+            [121.563, 25.037],
+            [121.563, 25.033]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district_id": "shilin",
+        "name": "士林夜市商圈",
+        "type": "商圈",
+        "visitor_count": 38000,
+        "shop_count": 280,
+        "avg_spending": 450,
+        "category": "美食觀光",
+        "peak_hours": "17:00-24:00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [121.524, 25.0875],
+            [121.527, 25.0875],
+            [121.527, 25.09],
+            [121.524, 25.09],
+            [121.524, 25.0875]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "district_id": "dongmen",
+        "name": "東門永康商圈",
+        "type": "商圈",
+        "visitor_count": 28000,
+        "shop_count": 210,
+        "avg_spending": 680,
+        "category": "文創美食",
+        "peak_hours": "11:00-20:00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [121.528, 25.033],
+            [121.531, 25.033],
+            [121.531, 25.0355],
+            [121.528, 25.0355],
+            [121.528, 25.033]
+          ]
+        ]
+      }
+    }
+  ]
+}

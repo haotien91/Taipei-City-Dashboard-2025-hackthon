@@ -1,0 +1,133 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "ximending_mrt",
+        "name": "西門捷運站",
+        "type": "捷運站",
+        "flow_intensity": 95,
+        "peak_flow": 12000,
+        "current_flow": 8500,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.50853, 25.042271]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "taipei_101",
+        "name": "台北101",
+        "type": "地標",
+        "flow_intensity": 88,
+        "peak_flow": 15000,
+        "current_flow": 13200,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.564837, 25.033976]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "shilin_main",
+        "name": "士林夜市主街",
+        "type": "夜市",
+        "flow_intensity": 72,
+        "peak_flow": 8000,
+        "current_flow": 5760,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.525389, 25.088523]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "yongkang_street",
+        "name": "永康街口",
+        "type": "美食街",
+        "flow_intensity": 65,
+        "peak_flow": 6000,
+        "current_flow": 3900,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.529835, 25.033789]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "ximending_cinema",
+        "name": "西門町電影街",
+        "type": "娛樂區",
+        "flow_intensity": 78,
+        "peak_flow": 9000,
+        "current_flow": 7020,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.507885, 25.043605]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "xinyi_eslite",
+        "name": "信義誠品",
+        "type": "書店",
+        "flow_intensity": 60,
+        "peak_flow": 5000,
+        "current_flow": 3000,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.56589, 25.03542]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "breeze_xinyi",
+        "name": "微風信義",
+        "type": "百貨公司",
+        "flow_intensity": 82,
+        "peak_flow": 10000,
+        "current_flow": 8200,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.56676, 25.03589]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "hotspot_id": "shilin_temple",
+        "name": "慈諴宮",
+        "type": "寺廟",
+        "flow_intensity": 45,
+        "peak_flow": 3000,
+        "current_flow": 1350,
+        "time": "2024-06-01T14:30:00+08:00"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.52612, 25.08923]
+      }
+    }
+  ]
+}
