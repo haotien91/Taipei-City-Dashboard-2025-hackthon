@@ -17,6 +17,7 @@ import { useAuthStore } from "../store/authStore";
 
 import MoreInfo from "../components/dialogs/MoreInfo.vue";
 import ReportIssue from "../components/dialogs/ReportIssue.vue";
+import DistrictInfo from "../components/dialogs/DistrictInfo.vue";
 
 const contentStore = useContentStore();
 const dialogStore = useDialogStore();
@@ -96,6 +97,7 @@ function handleMoreInfo(item) {
     />
     <MoreInfo />
     <ReportIssue />
+    <DistrictInfo />
   </div>
   <!-- 2. Dashboards that have components -->
   <div
@@ -162,6 +164,7 @@ function handleMoreInfo(item) {
     />
     <MoreInfo />
     <ReportIssue />
+    <DistrictInfo />
   </div>
   <!-- 3. If dashboard is still loading -->
   <div

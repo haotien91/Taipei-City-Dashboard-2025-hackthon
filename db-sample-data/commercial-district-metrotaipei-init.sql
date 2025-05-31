@@ -44,9 +44,9 @@ ON CONFLICT (index) DO UPDATE SET
 INSERT INTO public.component_charts (index, color, types, unit)
 VALUES (
     'commercial_district_density_metrotaipei',
-    '{#E74C3C,#F39C12,#F1C40F,#2ECC71,#3498DB,#9B59B6,#E67E22,#95A5A6}',
-    '{DistrictChart,ColumnChart}',
-    '家'
+    '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}',
+    '{DistrictChart}',
+    '個'
 )
 ON CONFLICT (index) DO UPDATE SET
     color = EXCLUDED.color,

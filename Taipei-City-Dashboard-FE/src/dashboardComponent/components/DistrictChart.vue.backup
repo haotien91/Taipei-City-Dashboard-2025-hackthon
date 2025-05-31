@@ -78,8 +78,8 @@ const districtEvents = {
 			name: '信義商圈購物節',
 			type: '市集',
 			location: '信義廣場',
-			startTime: "2025-05-31T15:00:00",
-			endTime: "2025-05-31T20:00:00",
+			startTime: '2025-05-31T10:00:00',
+			endTime: '2025-05-31T22:00:00',
 			description: '國際品牌與在地文創的購物饗宴'
 		},
 		{

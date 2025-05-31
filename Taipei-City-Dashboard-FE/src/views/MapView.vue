@@ -20,6 +20,7 @@ import { useMapStore } from "../store/mapStore";
 import MapContainer from "../components/map/MapContainer.vue";
 import MoreInfo from "../components/dialogs/MoreInfo.vue";
 import ReportIssue from "../components/dialogs/ReportIssue.vue";
+import DistrictInfo from "../components/dialogs/DistrictInfo.vue";
 
 const contentStore = useContentStore();
 const dialogStore = useDialogStore();
@@ -406,6 +407,7 @@ function shouldDisable(map_config) {
     <MapContainer />
     <MoreInfo />
     <ReportIssue />
+    <DistrictInfo />
   </div>
 </template>
 

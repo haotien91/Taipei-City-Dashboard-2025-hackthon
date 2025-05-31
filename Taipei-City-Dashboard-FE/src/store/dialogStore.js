@@ -44,6 +44,7 @@ export const useDialogStore = defineStore("dialog", {
 			addPin: false,
 			addViewPoint: false,
 			findClosestPoint: false,
+			districtInfo: false, // 行政區資訊彈跳視窗
 		},
 		// Stores the content for notifications
 		notification: {
@@ -58,6 +59,11 @@ export const useDialogStore = defineStore("dialog", {
 		},
 		// Stores the content for more info dialogs
 		moreInfoContent: null,
+		// Stores the content for district info dialogs
+		districtInfoContent: {
+			districtName: "",
+			events: [],
+		},
 		// Stores Edit or Add mode for addeditdashboards dialog
 		addEdit: "",
 		// Stores the current timeout for notifications
@@ -79,6 +85,7 @@ export const useDialogStore = defineStore("dialog", {
 				this.dialogs[keys[i]] = false;
 			}
 			this.moreInfoContent = null;
+			this.districtInfoContent = { districtName: "", events: [] };
 		},
 		// Show the notification bar and update the notification message
 		showNotification(status, message, showtime = 3000) {
@@ -107,6 +114,14 @@ export const useDialogStore = defineStore("dialog", {
 				id: id,
 				index: index,
 				name: name,
+			};
+		},
+		// Show the district info dialog and update the content
+		showDistrictInfo(districtName, events) {
+			this.showDialog("districtInfo");
+			this.districtInfoContent = {
+				districtName: districtName,
+				events: events,
 			};
 		},
 	},
