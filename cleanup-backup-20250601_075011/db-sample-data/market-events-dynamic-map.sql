@@ -1,6 +1,6 @@
 -- 動態顏色市集活動地圖配置
 -- 根據活動狀態顯示不同顏色的圓點
--- 創建時間：2025-06-01T02:48:10.604987
+-- 創建時間：2025-06-01T02:54:19.620139
 
 -- 新增動態顏色地圖配置
 INSERT INTO public.component_maps (index, title, type, source, size, icon, paint, property) 
