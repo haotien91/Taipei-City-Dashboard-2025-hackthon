@@ -3,7 +3,7 @@
 		<!-- 精簡的問題展示 -->
 		<div class="question-content">
 			<div class="question-title">
-				<h2>{{ question.text }} ({{ questionNumber }}/3)</h2>
+				<h2>{{ question.text }} ({{ questionNumber }}/5)</h2>
 				<p class="question-subtitle">
 					{{ question.subtitle || "選擇最符合你想法的選項" }}
 				</p>
@@ -78,9 +78,21 @@ function selectOption(option) {
 
 onMounted(() => {
 	console.log("QuizQuestion mounted - Question data:", props.question);
+	console.log("Question text:", props.question?.text);
+	console.log("Question options:", props.question?.options);
+	console.log("Options length:", props.question?.options?.length);
 
 	if (!props.question?.options || props.question.options.length === 0) {
 		console.error("問題選項缺失或為空數組");
+		console.error(
+			"完整的question prop:",
+			JSON.stringify(props.question, null, 2)
+		);
+	} else {
+		console.log("問題選項正常，數量:", props.question.options.length);
+		props.question.options.forEach((option, index) => {
+			console.log(`選項 ${index + 1}:`, option.text, option.emoji);
+		});
 	}
 });
 </script>

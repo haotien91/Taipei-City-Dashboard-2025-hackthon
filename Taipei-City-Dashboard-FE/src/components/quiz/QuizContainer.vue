@@ -14,14 +14,6 @@
 						<span>play_arrow</span>
 						開始測驗
 					</button>
-					<button
-						class="quiz-restart-btn"
-						@click="restartQuiz"
-						v-if="quizResult"
-					>
-						<span>refresh</span>
-						重新測驗
-					</button>
 				</div>
 			</div>
 		</div>
@@ -52,7 +44,6 @@
 				<QuizResult
 					:result="quizResult"
 					:recommended-districts="recommendedDistricts"
-					@restart="restartQuiz"
 					@show-detail="showDistrictDetail"
 				/>
 			</div>
@@ -127,6 +118,23 @@ watch(
 		}
 	},
 	{ immediate: true }
+);
+
+// 監聽questions陣列變化
+watch(
+	() => questions.value,
+	(newQuestions) => {
+		console.log("questions陣列更新:", newQuestions);
+		console.log("questions數量:", newQuestions?.length || 0);
+		if (newQuestions && newQuestions.length > 0) {
+			console.log("第一個問題:", newQuestions[0]);
+			console.log(
+				"第一個問題選項數量:",
+				newQuestions[0]?.options?.length || 0
+			);
+		}
+	},
+	{ immediate: true, deep: true }
 );
 </script>
 
@@ -234,8 +242,7 @@ watch(
 	flex-wrap: wrap;
 }
 
-.quiz-start-btn,
-.quiz-restart-btn {
+.quiz-start-btn {
 	display: flex;
 	align-items: center;
 	gap: 8px;
@@ -249,6 +256,9 @@ watch(
 	text-decoration: none;
 	position: relative;
 	z-index: 2;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+	box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 
 	span {
 		font-family: var(--font-icon);
@@ -258,41 +268,12 @@ watch(
 	&:hover {
 		transform: translateY(-2px);
 		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+		background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+		box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
 	}
 
 	&:active {
 		transform: translateY(0);
-	}
-}
-
-.quiz-start-btn {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	color: white;
-	box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-
-	&:hover {
-		background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-		box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-	}
-}
-
-.quiz-restart-btn {
-	background: linear-gradient(
-		135deg,
-		rgba(255, 255, 255, 0.2),
-		rgba(255, 255, 255, 0.1)
-	);
-	color: white;
-	border: 1px solid rgba(255, 255, 255, 0.3);
-	backdrop-filter: blur(10px);
-
-	&:hover {
-		background: linear-gradient(
-			135deg,
-			rgba(255, 255, 255, 0.25),
-			rgba(255, 255, 255, 0.15)
-		);
-		border-color: rgba(255, 255, 255, 0.4);
 	}
 }
 
@@ -333,8 +314,7 @@ watch(
 		}
 	}
 
-	.quiz-start-btn,
-	.quiz-restart-btn {
+	.quiz-start-btn {
 		width: 100%;
 		justify-content: center;
 		padding: 14px 24px;

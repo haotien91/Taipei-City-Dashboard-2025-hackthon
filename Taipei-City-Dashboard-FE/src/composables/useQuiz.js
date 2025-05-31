@@ -1,416 +1,637 @@
 import { ref, computed } from "vue";
+import { getDistrictById } from "../data/districts.js";
 
 /**
- * 台北商圈心理測驗 composable - 2.0版本
+ * 台北商圈心理測驗 composable - 3.0版本
+ * 基於 OOOPEN Lab 設計方法重新設計
  * @returns {Object} 測驗相關的狀態和方法
  */
 export function useQuiz() {
-	// 新版本的自然化問題數據 - 二選一格式
+	// 重新設計的自然化問題數據 - 基於台北商圈特色
 	const naturalQuestions = [
 		{
 			id: 1,
-			text: "週末出門玩，你喜歡什麼時候去逛街？",
-			subtitle: "選擇你最喜歡的時段",
+			text: "假日出門，你最期待的是什麼時光？",
+			subtitle: "選擇最吸引你的生活節奏",
 			options: [
 				{
 					id: "day",
-					text: "白天逛街",
+					text: "陽光午後慢逛",
 					emoji: "☀️",
-					description: "我喜歡白天的陽光和咖啡香，享受悠閒購物時光",
+					description: "我喜歡在溫暖的陽光下，悠閒地探索街頭巷尾",
 					score: { timePreference: "day" },
 				},
 				{
 					id: "night",
-					text: "夜晚覓食",
-					emoji: "🌙",
-					description: "我喜歡夜市熱鬧氛圍，品嚐美食和夜生活",
+					text: "燈火璀璨夜生活",
+					emoji: "🌃",
+					description: "我享受夜晚的熱鬧氛圍，在燈光中尋找城市的魅力",
 					score: { timePreference: "night" },
 				},
 			],
 		},
 		{
 			id: 2,
-			text: "你更重視商圈的什麼特色？",
-			subtitle: "白天商圈的魅力所在",
+			text: "白天逛街時，你最想體驗什麼？",
+			subtitle: "陽光下的台北探索",
 			condition: { timePreference: "day" },
 			options: [
 				{
 					id: "shopping",
-					text: "購物體驗",
+					text: "精品購物體驗",
 					emoji: "🛍️",
-					description: "我想要豐富的購物選擇，從精品到平價都有",
+					description: "我想在有格調的商圈挑選心儀的商品",
 					score: { activity: "shopping" },
 				},
 				{
 					id: "culture",
-					text: "文化氛圍",
+					text: "文化古蹟漫步",
 					emoji: "🏛️",
-					description: "我偏愛有歷史文化特色的商圈漫步體驗",
+					description: "我想感受台北的歷史文化，在老街中尋找故事",
 					score: { activity: "culture" },
+				},
+				{
+					id: "relax",
+					text: "療癒休閒時光",
+					emoji: "🌿",
+					description: "我想要放鬆身心，享受寧靜悠閒的時光",
+					score: { activity: "relax" },
 				},
 			],
 		},
 		{
 			id: "2b",
-			text: "夜晚商圈你最想體驗什麼？",
-			subtitle: "夜間活動的首選",
+			text: "夜晚出沒，你最渴望什麼體驗？",
+			subtitle: "夜貓子的台北冒險",
 			condition: { timePreference: "night" },
 			options: [
 				{
 					id: "food",
-					text: "美食探索",
+					text: "美食探險之旅",
 					emoji: "🍜",
-					description: "我想品嚐各種道地美食，從夜市到餐廳",
+					description: "我想品嚐各種道地美味，從夜市到餐廳都不放過",
 					score: { activity: "food" },
 				},
 				{
 					id: "nightlife",
-					text: "夜生活娛樂",
+					text: "都會夜生活",
 					emoji: "🍸",
-					description: "我想體驗酒吧、KTV等夜間娛樂活動",
+					description: "我想體驗台北的夜間文化，感受都市的不夜城魅力",
 					score: { activity: "nightlife" },
 				},
 			],
 		},
 		{
 			id: 3,
-			text: "你的消費習慣偏向哪種？",
-			subtitle: "購物時的考量重點",
+			text: "購物時，你的消費哲學是？",
+			subtitle: "反映你的生活品味",
 			condition: { activity: "shopping" },
 			options: [
 				{
-					id: "quality",
-					text: "品質優先",
+					id: "premium",
+					text: "質感優先主義",
 					emoji: "💎",
-					description: "我重視商品品質和服務，願意為好東西付費",
-					score: { budget: "high" },
+					description: "我重視品質與服務，願意為美好的體驗投資",
+					score: { budget: "high", style: "premium" },
 				},
 				{
-					id: "value",
-					text: "CP值至上",
+					id: "smart",
+					text: "聰明消費達人",
 					emoji: "🎯",
-					description: "我喜歡挖寶找便宜，追求物超所值的商品",
-					score: { budget: "low" },
+					description: "我善於挖掘高CP值好物，追求物超所值的驚喜",
+					score: { budget: "low", style: "practical" },
+				},
+			],
+		},
+		{
+			id: "3b",
+			text: "購物環境對你來說最重要的是？",
+			subtitle: "你理想的購物氛圍",
+			condition: { activity: "shopping", style: "premium" },
+			options: [
+				{
+					id: "international",
+					text: "國際化氛圍",
+					emoji: "🌍",
+					description: "我喜歡有異國風情的購物環境，感受多元文化",
+					score: { atmosphere: "international" },
+				},
+				{
+					id: "trendy",
+					text: "時尚潮流感",
+					emoji: "✨",
+					description: "我追求最新的流行趨勢，喜歡走在時尚前端",
+					score: { atmosphere: "trendy" },
+				},
+			],
+		},
+		{
+			id: "3c",
+			text: "在平價商圈，你最享受什麼？",
+			subtitle: "挖寶的樂趣所在",
+			condition: { activity: "shopping", style: "practical" },
+			options: [
+				{
+					id: "wholesale",
+					text: "批發市場尋寶",
+					emoji: "📦",
+					description: "我喜歡在批發商圈挖掘獨特商品，享受淘寶的驚喜",
+					score: { shoppingStyle: "wholesale" },
+				},
+				{
+					id: "vintage",
+					text: "復古特色小店",
+					emoji: "🏮",
+					description:
+						"我偏愛有歷史感的商圈，尋找獨一無二的vintage好物",
+					score: { shoppingStyle: "vintage" },
 				},
 			],
 		},
 		{
 			id: 4,
-			text: "文化商圈中，你偏愛哪種風格？",
-			subtitle: "文化體驗的選擇",
+			text: "探索文化古蹟時，你偏愛什麼氛圍？",
+			subtitle: "感受台北的時空魅力",
 			condition: { activity: "culture" },
 			options: [
 				{
 					id: "traditional",
-					text: "傳統古韻",
+					text: "古早味傳統",
 					emoji: "🏮",
-					description: "我喜歡古蹟老街，感受台灣傳統文化魅力",
-					score: { style: "traditional" },
+					description: "我喜歡傳統市場的人情味，感受最道地的台北風情",
+					score: { cultureStyle: "traditional", atmosphere: "local" },
 				},
 				{
-					id: "modern",
-					text: "現代文創",
-					emoji: "🎨",
-					description: "我偏愛文創園區，追求現代設計美學",
-					score: { style: "modern" },
+					id: "historic",
+					text: "日式復古風",
+					emoji: "⛩️",
+					description: "我被日治時期的建築吸引，享受懷舊復古的情調",
+					score: {
+						cultureStyle: "historic",
+						atmosphere: "nostalgic",
+					},
+				},
+			],
+		},
+		{
+			id: "4b",
+			text: "在傳統商圈，你最想體驗什麼？",
+			subtitle: "深度文化探索",
+			condition: { activity: "culture", cultureStyle: "traditional" },
+			options: [
+				{
+					id: "market",
+					text: "傳統市場人情味",
+					emoji: "🥟",
+					description: "我想感受傳統市場的熱鬧，品嚐道地小吃與人情味",
+					score: { focus: "market" },
+				},
+				{
+					id: "temple",
+					text: "廟宇文化巡禮",
+					emoji: "🏯",
+					description: "我想探訪古老廟宇，了解台北的宗教文化底蘊",
+					score: { focus: "temple" },
+				},
+			],
+		},
+		{
+			id: "4c",
+			text: "日式復古風情中，你最著迷於？",
+			subtitle: "昔日時光的魅力",
+			condition: { activity: "culture", cultureStyle: "historic" },
+			options: [
+				{
+					id: "architecture",
+					text: "歷史建築之美",
+					emoji: "🏛️",
+					description:
+						"我被老建築的建築美學深深吸引，喜歡細賞每個細節",
+					score: { focus: "architecture" },
+				},
+				{
+					id: "lifestyle",
+					text: "復古生活風格",
+					emoji: "🎎",
+					description: "我想體驗昔日的生活方式，感受那個時代的浪漫",
+					score: { focus: "lifestyle" },
 				},
 			],
 		},
 		{
 			id: 5,
-			text: "美食探索時，你的偏好是？",
-			subtitle: "美食獵人的選擇",
-			condition: { activity: "food" },
+			text: "休閒放鬆時，你最需要什麼？",
+			subtitle: "找到你的療癒方式",
+			condition: { activity: "relax" },
 			options: [
 				{
-					id: "popular",
-					text: "熱門排隊店",
-					emoji: "📸",
-					description: "我喜歡網紅推薦的熱門美食，享受排隊的期待感",
-					score: { foodStyle: "popular" },
+					id: "nature",
+					text: "自然溫泉療癒",
+					emoji: "♨️",
+					description: "我想要泡溫泉放鬆，在自然環境中釋放壓力",
+					score: { relaxStyle: "hotspring", atmosphere: "nature" },
 				},
 				{
-					id: "local",
-					text: "在地隱藏版",
-					emoji: "🔍",
-					description: "我偏愛巷弄深處的老店，尋找在地人的秘密基地",
-					score: { foodStyle: "local" },
+					id: "urban",
+					text: "都會咖啡時光",
+					emoji: "☕",
+					description: "我喜歡在城市中找個安靜角落，享受咖啡和書香",
+					score: { relaxStyle: "cafe", atmosphere: "urban" },
+				},
+			],
+		},
+		{
+			id: "5b",
+			text: "泡溫泉時，你偏好哪種環境？",
+			subtitle: "溫泉療癒的理想選擇",
+			condition: { activity: "relax", relaxStyle: "hotspring" },
+			options: [
+				{
+					id: "resort",
+					text: "度假村氛圍",
+					emoji: "🏨",
+					description:
+						"我喜歡完整的溫泉度假體驗，享受全方位的放鬆服務",
+					score: { hotelStyle: "resort" },
+				},
+				{
+					id: "mountain",
+					text: "山林野趣",
+					emoji: "🏔️",
+					description:
+						"我偏愛隱身山間的溫泉，在自然環境中找到內心平靜",
+					score: { hotelStyle: "mountain" },
+				},
+			],
+		},
+		{
+			id: "5c",
+			text: "都會咖啡時光，你最重視什麼？",
+			subtitle: "城市中的寧靜片刻",
+			condition: { activity: "relax", relaxStyle: "cafe" },
+			options: [
+				{
+					id: "bookstore",
+					text: "書香咖啡文化",
+					emoji: "📚",
+					description:
+						"我想在書店咖啡館中品味知性時光，享受閱讀的樂趣",
+					score: { cafeStyle: "bookstore" },
+				},
+				{
+					id: "design",
+					text: "設計美學空間",
+					emoji: "🎨",
+					description: "我被有設計感的咖啡廳吸引，欣賞空間美學與創意",
+					score: { cafeStyle: "design" },
 				},
 			],
 		},
 		{
 			id: 6,
-			text: "夜生活娛樂你比較偏好？",
-			subtitle: "夜晚的娛樂方式",
+			text: "美食探索時，你是哪種類型？",
+			subtitle: "發現你的味蕾偏好",
+			condition: { activity: "food" },
+			options: [
+				{
+					id: "famous",
+					text: "知名美食獵人",
+					emoji: "📸",
+					description: "我喜歡朝聖知名夜市，品嚐經典必吃小吃",
+					score: { foodStyle: "famous", crowd: "popular" },
+				},
+				{
+					id: "hidden",
+					text: "巷弄秘境探索者",
+					emoji: "🔍",
+					description:
+						"我偏愛尋找隱藏版美食，享受在地人才知道的好味道",
+					score: { foodStyle: "hidden", crowd: "local" },
+				},
+			],
+		},
+		{
+			id: "6b",
+			text: "在知名夜市，你最期待什麼體驗？",
+			subtitle: "夜市文化的精髓",
+			condition: { activity: "food", foodStyle: "famous" },
+			options: [
+				{
+					id: "classic",
+					text: "經典必吃清單",
+					emoji: "🏆",
+					description: "我想按圖索驥品嚐所有經典小吃，不錯過任何名店",
+					score: { foodFocus: "classic" },
+				},
+				{
+					id: "atmosphere",
+					text: "夜市熱鬧氛圍",
+					emoji: "🎊",
+					description:
+						"我享受夜市的人聲鼎沸，在熱鬧中感受台灣夜市文化",
+					score: { foodFocus: "atmosphere" },
+				},
+			],
+		},
+		{
+			id: "6c",
+			text: "尋找隱藏美食時，你最信任什麼？",
+			subtitle: "在地美食探索之道",
+			condition: { activity: "food", foodStyle: "hidden" },
+			options: [
+				{
+					id: "locals",
+					text: "在地人推薦",
+					emoji: "👥",
+					description:
+						"我相信在地人的口碑，跟著老顧客找到真正的好味道",
+					score: { discovery: "locals" },
+				},
+				{
+					id: "intuition",
+					text: "直覺與緣分",
+					emoji: "✨",
+					description:
+						"我喜歡隨性探索，用直覺發現藏在巷弄間的美食驚喜",
+					score: { discovery: "intuition" },
+				},
+			],
+		},
+		{
+			id: 7,
+			text: "夜生活中，你比較嚮往哪種氛圍？",
+			subtitle: "夜晚的都市探索",
 			condition: { activity: "nightlife" },
 			options: [
 				{
-					id: "casual",
-					text: "輕鬆小酌",
-					emoji: "🏮",
-					description: "我喜歡溫馨的居酒屋氛圍，和朋友小酌聊天",
-					score: { nightStyle: "casual" },
+					id: "sophisticated",
+					text: "精緻都會風",
+					emoji: "🥂",
+					description: "我喜歡有格調的酒吧，享受都市夜晚的優雅氛圍",
+					score: { nightStyle: "upscale", atmosphere: "modern" },
 				},
 				{
-					id: "party",
-					text: "熱鬧派對",
-					emoji: "🎉",
-					description: "我追求熱鬧的夜店文化，享受音樂和舞蹈",
-					score: { nightStyle: "party" },
+					id: "authentic",
+					text: "道地居酒屋",
+					emoji: "🏮",
+					description: "我偏愛溫馨的日式居酒屋，在微醺中感受人情味",
+					score: { nightStyle: "cozy", atmosphere: "traditional" },
+				},
+			],
+		},
+		{
+			id: "7b",
+			text: "在精緻酒吧，你最看重什麼？",
+			subtitle: "都會夜生活的品味",
+			condition: { activity: "nightlife", nightStyle: "upscale" },
+			options: [
+				{
+					id: "cocktail",
+					text: "創意調酒藝術",
+					emoji: "🍹",
+					description:
+						"我欣賞調酒師的專業技藝，品味每杯酒背後的創意故事",
+					score: { nightFocus: "cocktail" },
+				},
+				{
+					id: "ambience",
+					text: "氛圍與社交",
+					emoji: "🌃",
+					description:
+						"我重視酒吧的設計美學，享受與朋友談天說地的時光",
+					score: { nightFocus: "ambience" },
+				},
+			],
+		},
+		{
+			id: "7c",
+			text: "在居酒屋，你最享受什麼？",
+			subtitle: "日式夜晚的溫暖",
+			condition: { activity: "nightlife", nightStyle: "cozy" },
+			options: [
+				{
+					id: "sake",
+					text: "清酒與下酒菜",
+					emoji: "🍶",
+					description: "我喜歡品嚐不同的清酒，配上道地的日式下酒菜",
+					score: { nightFocus: "sake" },
+				},
+				{
+					id: "conversation",
+					text: "深度交流談心",
+					emoji: "💬",
+					description: "我珍惜在溫馨環境中與朋友深談，分享生活點滴",
+					score: { nightFocus: "conversation" },
+				},
+			],
+		},
+		{
+			id: 8,
+			text: "最後一題：你理想的台北一日遊是？",
+			subtitle: "總結你的完美體驗",
+			options: [
+				{
+					id: "diverse",
+					text: "多元文化體驗",
+					emoji: "🌏",
+					description: "我想在一天內體驗台北的多樣面貌，從傳統到現代",
+					score: { finalChoice: "diverse" },
+				},
+				{
+					id: "focused",
+					text: "深度單一主題",
+					emoji: "🎯",
+					description: "我偏愛專注在一個主題上深度探索，不求廣但求精",
+					score: { finalChoice: "focused" },
+				},
+				{
+					id: "spontaneous",
+					text: "隨性自在漫遊",
+					emoji: "🚶",
+					description:
+						"我喜歡沒有計畫的自由探索，讓台北自己告訴我故事",
+					score: { finalChoice: "spontaneous" },
 				},
 			],
 		},
 	];
 
-	// 完整的商圈數據
-	const districtData = {
-		xinyi: {
-			id: "xinyi",
-			name: "信義商圈",
-			image: "https://images.unsplash.com/photo-1587049633312-d628ae50a8ae?w=800&h=600&fit=crop",
-			description:
-				"台北最具國際化的現代商圈，摩天大樓與精品店林立，是時尚購物與美食的頂級聚集地",
-			tags: ["時尚", "購物", "現代", "國際"],
-			location: "信義區",
-			rating: "4.8",
-			highlights: [
-				"台北101觀景台",
-				"新光三越信義新天地",
-				"誠品信義店",
-				"威秀影城",
-			],
-			transportation: {
-				mrt: "信義安和站、市政府站",
-				bus: "藍5、藍26、266、611",
-			},
-			spending: {
-				dining: "NT$ 400-1200",
-				shopping: "NT$ 1500-8000",
-			},
-			timing: {
-				weekday: "11:00-22:00",
-				weekend: "10:00-23:00",
-			},
-		},
-		dongqu: {
-			id: "dongqu",
-			name: "東區商圈",
-			image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&h=600&fit=crop",
-			description:
-				"永遠的時尚指標，從忠孝東路四段到敦化南路，集結最新潮的服飾、美妝與餐廳",
-			tags: ["潮流", "美食", "夜生活", "購物"],
-			location: "大安區",
-			rating: "4.6",
-			highlights: ["SOGO復興館", "明曜百貨", "頂好商圈", "國父紀念館"],
-			transportation: {
-				mrt: "忠孝復興站、忠孝敦化站",
-				bus: "204、270、311、621",
-			},
-			spending: {
-				dining: "NT$ 300-1000",
-				shopping: "NT$ 800-5000",
-			},
-			timing: {
-				weekday: "11:00-22:00",
-				weekend: "10:00-23:00",
-			},
-		},
-		wufenpu: {
-			id: "wufenpu",
-			name: "五分埔商圈",
-			image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
-			description:
-				"台北最大的服飾批發商圈，CP值超高的購物天堂，從韓風到歐美風應有盡有",
-			tags: ["批發", "平價", "服飾", "挖寶"],
-			location: "信義區",
-			rating: "4.3",
-			highlights: ["服飾批發中心", "韓系服飾店", "配件雜貨", "平價美食"],
-			transportation: {
-				mrt: "後山埤站、永春站",
-				bus: "32、46、257、286",
-			},
-			spending: {
-				dining: "NT$ 100-300",
-				shopping: "NT$ 200-800",
-			},
-			timing: {
-				weekday: "13:00-21:00",
-				weekend: "11:00-21:00",
-			},
-		},
-		huayinstreet: {
-			id: "huayinstreet",
-			name: "華陰街商圈",
-			image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop",
-			description:
-				"台北車站旁的購物寶庫，以平價服飾、3C用品和美食聞名的老字號商圈",
-			tags: ["平價", "3C", "傳統", "美食"],
-			location: "大同區",
-			rating: "4.2",
-			highlights: ["光華商場", "站前地下街", "懷寧商圈", "台北車站美食"],
-			transportation: {
-				mrt: "台北車站、中山站",
-				bus: "9、37、274、612",
-			},
-			spending: {
-				dining: "NT$ 80-250",
-				shopping: "NT$ 150-600",
-			},
-			timing: {
-				weekday: "10:00-21:00",
-				weekend: "10:00-22:00",
-			},
-		},
-		dihua: {
-			id: "dihua",
-			name: "迪化街商圈",
-			image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop",
-			description:
-				"百年老街的歷史風華，傳統年貨、中藥材、茶葉和古早味小吃的文化寶庫",
-			tags: ["歷史", "傳統", "文化", "老街"],
-			location: "大同區",
-			rating: "4.5",
-			highlights: [
-				"百年建築",
-				"傳統年貨大街",
-				"霞海城隍廟",
-				"古早味小吃",
-			],
-			transportation: {
-				mrt: "北門站、大橋頭站",
-				bus: "206、274、518、669",
-			},
-			spending: {
-				dining: "NT$ 50-200",
-				shopping: "NT$ 100-500",
-			},
-			timing: {
-				weekday: "09:00-18:00",
-				weekend: "09:00-19:00",
-			},
-		},
-		dadaocheng: {
-			id: "dadaocheng",
-			name: "大稻埕商圈",
-			image: "https://images.unsplash.com/photo-1589059243688-f3fba8c2b8ad?w=800&h=600&fit=crop",
-			description:
-				"台北的文藝復興區域，結合歷史建築、文創店鋪與特色咖啡廳的懷舊商圈",
-			tags: ["文創", "咖啡", "歷史", "藝術"],
-			location: "大同區",
-			rating: "4.4",
-			highlights: ["文創商店", "特色咖啡廳", "古蹟導覽", "淡水河景"],
-			transportation: {
-				mrt: "北門站、中山站",
-				bus: "9、206、255、518",
-			},
-			spending: {
-				dining: "NT$ 150-400",
-				shopping: "NT$ 200-800",
-			},
-			timing: {
-				weekday: "10:00-19:00",
-				weekend: "10:00-20:00",
-			},
-		},
-		shilin: {
-			id: "shilin",
-			name: "士林夜市",
-			image: "https://images.unsplash.com/photo-1551218370-8d998d9b0f2a?w=800&h=600&fit=crop",
-			description:
-				"台北最著名的觀光夜市，美食與娛樂的完美結合，國內外遊客必訪聖地",
-			tags: ["夜市", "美食", "觀光", "熱鬧"],
-			location: "士林區",
-			rating: "4.6",
-			highlights: ["豪大雞排", "蚵仔煎", "雪花冰", "夜市遊戲"],
-			transportation: {
-				mrt: "劍潭站",
-				bus: "111、216、220、260",
-			},
-			spending: {
-				dining: "NT$ 150-500",
-				entertainment: "NT$ 100-300",
-			},
-			timing: {
-				weekday: "17:00-01:00",
-				weekend: "16:00-02:00",
-			},
-		},
-		ximending: {
-			id: "ximending",
-			name: "西門町商圈",
-			image: "https://images.unsplash.com/photo-1537516628943-ff5a8410b503?w=800&h=600&fit=crop",
-			description:
-				"台北的原宿，年輕潮流文化的發源地，街頭美食與流行文化的交匯點",
-			tags: ["年輕", "潮流", "娛樂", "多元"],
-			location: "萬華區",
-			rating: "4.5",
-			highlights: ["西門紅樓", "電影街", "街頭美食", "流行服飾"],
-			transportation: {
-				mrt: "西門站",
-				bus: "1、12、265、307",
-			},
-			spending: {
-				dining: "NT$ 100-400",
-				shopping: "NT$ 200-1000",
-			},
-			timing: {
-				weekday: "11:00-23:00",
-				weekend: "10:00-24:00",
-			},
-		},
-	};
-
-	// 結果類型定義
+	// 重新設計的結果類型定義 - 對應20個商圈
 	const resultTypes = {
-		H: {
-			name: "質感生活家",
-			description: "你追求品味與格調，願意為質感付費",
-			tagline: "推薦商圈：信義商圈、東區商圈",
+		// 高檔購物型
+		PREMIUM_SHOPPER: {
+			name: "精品生活家",
+			description: "你追求高品質的生活體驗，重視環境氛圍與服務品質",
+			personality: "品味獨到、注重質感",
+			districts: ["tianmu", "zhongshan", "siping"], // 天母、中山、四平陽光
 		},
-		L: {
-			name: "精明消費達人",
-			description: "你善於發現物超所值的好東西",
-			tagline: "推薦商圈：五分埔、華陰街商圈",
+		// 國際化購物型
+		INTERNATIONAL_SHOPPER: {
+			name: "國際品味達人",
+			description: "你喜歡多元文化的購物體驗，追求國際化的生活風格",
+			personality: "國際視野、文化包容",
+			districts: ["tianmu", "yuanshan", "zhongshan"], // 天母、圓山、中山
 		},
-		O: {
-			name: "文化探索者",
-			description: "你對歷史文化有著深深的眷戀",
-			tagline: "推薦商圈：迪化街、大稻埕商圈",
+		// 聰明消費型
+		SMART_SHOPPER: {
+			name: "精明購物達人",
+			description: "你善於發現物超所值的好東西，是聰明消費的典範",
+			personality: "理性消費、眼光獨到",
+			districts: ["houzhan", "chaoyang", "wanhua"], // 後站、朝陽服飾材料、萬華街區
 		},
-		N: {
-			name: "文青生活家",
-			description: "你是熱愛創意與美學的文藝青年",
-			tagline: "推薦商圈：大稻埕、西門町商圈",
+		// 批發尋寶型
+		WHOLESALE_HUNTER: {
+			name: "批發市場探險家",
+			description: "你熱愛在批發商圈尋寶，總能找到意想不到的好東西",
+			personality: "探險精神、挖掘達人",
+			districts: ["houzhan", "chaoyang", "siping"], // 後站、朝陽服飾材料、四平陽光
 		},
-		S: {
-			name: "療癒系旅人",
-			description: "你懂得照顧自己，追求身心放鬆",
-			tagline: "推薦商圈：士林夜市周邊",
+		// 傳統文化型
+		CULTURE_LOVER: {
+			name: "古城文化探索者",
+			description: "你對台北的歷史文化有深厚興趣，喜愛傳統市井風情",
+			personality: "懷古情懷、人文氣息",
+			districts: ["qingguang", "wanhua", "rongding"], // 晴光、萬華街區、榮町
 		},
-		T: {
-			name: "山景品茗師",
-			description: "你追求寧靜致遠的雅士",
-			tagline: "推薦商圈：大稻埕咖啡文化",
+		// 市場美食型
+		MARKET_FOODIE: {
+			name: "傳統市場美食家",
+			description: "你熱愛傳統市場的人情味與道地小吃",
+			personality: "親切隨和、重視人情味",
+			districts: ["qingguang", "wanhua", "tonghua"], // 晴光、萬華街區、通化夜市
 		},
-		M: {
-			name: "美食獵人",
-			description: "你是熱愛探索美食的饕客",
-			tagline: "推薦商圈：士林夜市、西門町商圈",
+		// 日式復古型
+		RETRO_ENTHUSIAST: {
+			name: "日式復古愛好者",
+			description: "你被日治時期的建築與文化深深吸引，享受復古的浪漫",
+			personality: "復古情調、文藝氣質",
+			districts: ["tiaotong", "rongding", "zhongshanwedding"], // 條通、榮町、中山北路婚紗
 		},
-		P: {
-			name: "在地美食通",
-			description: "你深諳在地美味的老饕",
-			tagline: "推薦商圈：士林夜市、迪化街商圈",
+		// 建築美學型
+		ARCHITECTURE_LOVER: {
+			name: "建築美學鑑賞家",
+			description: "你對歷史建築有獨特的審美，欣賞每個時代的建築藝術",
+			personality: "美學品味、歷史情懷",
+			districts: ["rongding", "zhongshanwedding", "chongnanbook"], // 榮町、中山北路婚紗、重南書路
 		},
-		J: {
-			name: "居酒屋愛好者",
-			description: "你偏愛日式溫暖的微醺氛圍",
-			tagline: "推薦商圈：東區、西門町商圈",
+		// 溫泉療癒型
+		HOTSPRING_SEEKER: {
+			name: "溫泉療癒師",
+			description: "你懂得照顧自己，追求身心靈的放鬆與平衡",
+			personality: "注重養生、享受慢活",
+			districts: ["xinbeitou", "xingyilu", "shipai"], // 新北投溫泉、行義路溫泉、石牌捷運
 		},
-		K: {
-			name: "夜生活玩家",
-			description: "你是熱愛夜生活的潮流先鋒",
-			tagline: "推薦商圈：信義商圈、東區商圈",
+		// 山林溫泉型
+		MOUNTAIN_SPA_LOVER: {
+			name: "山林溫泉隱士",
+			description: "你偏愛隱身山林的溫泉，在自然中找到內心的寧靜",
+			personality: "親近自然、內心平和",
+			districts: ["xingyilu", "xinbeitou", "shipai"], // 行義路溫泉、新北投溫泉、石牌捷運
+		},
+		// 都會咖啡型
+		URBAN_COFFEE_LOVER: {
+			name: "都會書香咖啡人",
+			description: "你喜歡在城市中尋找寧靜角落，享受知性的時光",
+			personality: "文青氣質、知性優雅",
+			districts: ["chongnanbook", "zhongshan", "yuanshan"], // 重南書路、中山、圓山
+		},
+		// 設計美學型
+		DESIGN_AESTHETE: {
+			name: "設計美學生活家",
+			description: "你被創意設計深深吸引，追求美學與生活的完美結合",
+			personality: "創意思維、美學追求",
+			districts: ["zhongshan", "yuanshan", "siping"], // 中山、圓山、四平陽光
+		},
+		// 知名美食型
+		FOODIE_EXPLORER: {
+			name: "夜市美食獵人",
+			description: "你熱愛探索台北的經典美食，是資深的夜市達人",
+			personality: "美食控、社交達人",
+			districts: ["shilin", "tonghua", "huaxi"], // 士林觀光夜市、通化夜市、華西街夜市
+		},
+		// 夜市氛圍型
+		NIGHT_MARKET_CULTURE: {
+			name: "夜市文化體驗家",
+			description: "你不只愛美食，更享受夜市的熱鬧氛圍與人情味",
+			personality: "熱愛生活、擁抱文化",
+			districts: ["shilin", "huaxi", "tonghua"], // 士林觀光夜市、華西街夜市、通化夜市
+		},
+		// 隱藏美食型
+		HIDDEN_GEM_HUNTER: {
+			name: "巷弄秘境探索者",
+			description: "你總能發現別人不知道的美食秘境，是在地美食通",
+			personality: "探險精神、在地專家",
+			districts: ["qingguang", "wanhua", "tonghua"], // 晴光、萬華街區、通化夜市
+		},
+		// 在地人情型
+		LOCAL_INSIDER: {
+			name: "在地人情通",
+			description: "你重視在地人的推薦，深入體驗台北的庶民文化",
+			personality: "親和力強、重視人際",
+			districts: ["qingguang", "wanhua", "huaxi"], // 晴光、萬華街區、華西街夜市
+		},
+		// 精緻夜生活型
+		SOPHISTICATED_NIGHT: {
+			name: "都會夜生活家",
+			description: "你享受台北夜晚的都會魅力，追求精緻的夜間體驗",
+			personality: "都會感、時尚品味",
+			districts: ["zhongshan", "tiaotong", "siping"], // 中山、條通、四平陽光
+		},
+		// 調酒藝術型
+		COCKTAIL_CONNOISSEUR: {
+			name: "調酒藝術鑑賞家",
+			description: "你欣賞調酒的專業技藝，品味每杯酒背後的創意故事",
+			personality: "專業品味、追求細節",
+			districts: ["zhongshan", "tiaotong", "tianmu"], // 中山、條通、天母
+		},
+		// 傳統夜生活型
+		COZY_NIGHT: {
+			name: "溫馨居酒屋愛好者",
+			description: "你偏愛有人情味的夜生活，在溫馨氛圍中找到歸屬感",
+			personality: "重情義、喜歡交流",
+			districts: ["tiaotong", "qingguang", "wanhua"], // 條通、晴光、萬華街區
+		},
+		// 清酒文化型
+		SAKE_CULTURE_LOVER: {
+			name: "清酒文化愛好者",
+			description: "你深度了解日式酒文化，享受清酒帶來的文化體驗",
+			personality: "文化深度、細膩品味",
+			districts: ["tiaotong", "zhongshanwedding", "rongding"], // 條通、中山北路婚紗、榮町
+		},
+		// 科技上班族型
+		TECH_WORKER: {
+			name: "科技新貴生活家",
+			description: "你是現代都會的科技工作者，重視便利與效率",
+			personality: "效率導向、現代感",
+			districts: ["xihu", "shipai", "zhongshan"], // 西湖、石牌捷運、中山
+		},
+		// 特殊興趣型
+		SPECIAL_INTEREST: {
+			name: "專業興趣達人",
+			description: "你有特殊的興趣領域，總能在專業商圈中找到樂趣",
+			personality: "專業導向、興趣廣泛",
+			districts: ["chengdecar", "chaoyang", "chongnanbook"], // 承德路中古汽車、朝陽服飾材料、重南書路
+		},
+		// 多元探索型
+		DIVERSE_EXPLORER: {
+			name: "多元文化探索家",
+			description: "你喜歡體驗台北的多樣面貌，從傳統到現代都不放過",
+			personality: "開放包容、好奇心強",
+			districts: ["yuanshan", "zhongshan", "wanhua"], // 圓山、中山、萬華街區
+		},
+		// 專注體驗型
+		FOCUSED_EXPERIENCER: {
+			name: "深度體驗專家",
+			description: "你偏愛深度探索，在單一主題中發現豐富層次",
+			personality: "專注深入、追求品質",
+			districts: ["tianmu", "xinbeitou", "chongnanbook"], // 天母、新北投溫泉、重南書路
+		},
+		// 隨性漫遊型
+		SPONTANEOUS_WANDERER: {
+			name: "隨性漫遊者",
+			description: "你享受沒有計畫的自由探索，讓城市自己告訴你故事",
+			personality: "自由自在、隨遇而安",
+			districts: ["qingguang", "siping", "tonghua"], // 晴光、四平陽光、通化夜市
 		},
 	};
 
@@ -451,17 +672,20 @@ export function useQuiz() {
 		const currentProfile = userProfile.value;
 
 		if (!currentProfile.timePreference) {
-			return 3; // 最少3題
+			return 5; // 預估最少5題
 		}
 
-		// 根據選擇的路徑計算實際問題數
+		// 根據選擇的路徑計算實際問題數，現在有更多分支問題
 		if (currentProfile.timePreference === "day") {
-			return 3; // 時間 + 活動 + 細分
+			if (currentProfile.activity === "shopping") return 4; // 基本 + 消費哲學 + 環境偏好
+			if (currentProfile.activity === "culture") return 4; // 基本 + 文化風格 + 深度探索
+			if (currentProfile.activity === "relax") return 4; // 基本 + 休閒類型 + 環境偏好
 		} else if (currentProfile.timePreference === "night") {
-			return 3; // 時間 + 活動 + 細分
+			if (currentProfile.activity === "food") return 4; // 基本 + 美食類型 + 探索方式
+			if (currentProfile.activity === "nightlife") return 4; // 基本 + 夜生活風格 + 體驗重點
 		}
 
-		return 3;
+		return 4; // 加上最後一題總結問題
 	});
 
 	// 檢查是否應該顯示問題
@@ -476,10 +700,13 @@ export function useQuiz() {
 
 	// 開始測驗
 	const startQuiz = () => {
-		console.log("開始心理測驗");
+		console.log("開始台北商圈心理測驗");
 		resetState();
 		// 載入第一題
 		questions.value = [naturalQuestions[0]];
+		console.log("載入的第一題數據:", naturalQuestions[0]);
+		console.log("questions.value:", questions.value);
+		console.log("第一題選項數量:", naturalQuestions[0].options?.length);
 		currentScreen.value = "question";
 	};
 
@@ -519,29 +746,95 @@ export function useQuiz() {
 		}
 	};
 
-	// 智能結果計算
+	// 智能結果計算 - 重新設計配對邏輯
 	const calculateResult = () => {
 		const profile = userProfile.value;
-		let resultType = "N"; // 默認結果
+		let resultType = "FOODIE_EXPLORER"; // 默認結果
 
 		console.log("計算結果，用戶檔案:", profile);
 
-		// 基於用戶檔案計算結果類型
+		// 基於用戶檔案計算結果類型 - 增加更細緻的判斷
 		if (profile.timePreference === "day") {
 			if (profile.activity === "shopping") {
 				// 購物路徑
-				resultType = profile.budget === "high" ? "H" : "L";
+				if (profile.budget === "high") {
+					// 高檔購物進一步細分
+					resultType =
+						profile.atmosphere === "international"
+							? "INTERNATIONAL_SHOPPER"
+							: "PREMIUM_SHOPPER";
+				} else {
+					// 平價購物進一步細分
+					resultType =
+						profile.shoppingStyle === "wholesale"
+							? "WHOLESALE_HUNTER"
+							: "SMART_SHOPPER";
+				}
 			} else if (profile.activity === "culture") {
 				// 文化路徑
-				resultType = profile.style === "traditional" ? "O" : "N";
+				if (profile.cultureStyle === "traditional") {
+					resultType =
+						profile.focus === "market"
+							? "MARKET_FOODIE"
+							: "CULTURE_LOVER";
+				} else {
+					resultType =
+						profile.focus === "architecture"
+							? "ARCHITECTURE_LOVER"
+							: "RETRO_ENTHUSIAST";
+				}
+			} else if (profile.activity === "relax") {
+				// 休閒路徑
+				if (profile.relaxStyle === "hotspring") {
+					resultType =
+						profile.hotelStyle === "mountain"
+							? "MOUNTAIN_SPA_LOVER"
+							: "HOTSPRING_SEEKER";
+				} else {
+					resultType =
+						profile.cafeStyle === "bookstore"
+							? "URBAN_COFFEE_LOVER"
+							: "DESIGN_AESTHETE";
+				}
 			}
 		} else if (profile.timePreference === "night") {
 			if (profile.activity === "food") {
 				// 美食路徑
-				resultType = profile.foodStyle === "popular" ? "M" : "P";
+				if (profile.foodStyle === "famous") {
+					resultType =
+						profile.foodFocus === "atmosphere"
+							? "NIGHT_MARKET_CULTURE"
+							: "FOODIE_EXPLORER";
+				} else {
+					resultType =
+						profile.discovery === "locals"
+							? "LOCAL_INSIDER"
+							: "HIDDEN_GEM_HUNTER";
+				}
 			} else if (profile.activity === "nightlife") {
 				// 夜生活路徑
-				resultType = profile.nightStyle === "casual" ? "J" : "K";
+				if (profile.nightStyle === "upscale") {
+					resultType =
+						profile.nightFocus === "cocktail"
+							? "COCKTAIL_CONNOISSEUR"
+							: "SOPHISTICATED_NIGHT";
+				} else {
+					resultType =
+						profile.nightFocus === "sake"
+							? "SAKE_CULTURE_LOVER"
+							: "COZY_NIGHT";
+				}
+			}
+		}
+
+		// 最後一題的總結性影響
+		if (profile.finalChoice) {
+			if (profile.finalChoice === "diverse") {
+				resultType = "DIVERSE_EXPLORER";
+			} else if (profile.finalChoice === "focused") {
+				resultType = "FOCUSED_EXPERIENCER";
+			} else if (profile.finalChoice === "spontaneous") {
+				resultType = "SPONTANEOUS_WANDERER";
 			}
 		}
 
@@ -556,31 +849,19 @@ export function useQuiz() {
 			type: resultType,
 			name: result.name,
 			description: result.description,
-			tagline: result.tagline,
+			personality: result.personality,
 			profile: profile,
-			recommendedTime:
-				profile.timePreference === "day"
-					? "白天 10:00-18:00"
-					: "夜晚 18:00-23:00",
+			recommendedTime: getRecommendedTime(profile),
 			budget: getBudgetRange(profile),
 			personalityInsights: getPersonalityInsights(profile),
 		};
 
-		// 商圈推薦對應表
-		const districtMapping = {
-			H: ["xinyi", "dongqu"], // 質感生活家 → 信義、東區
-			L: ["wufenpu", "huayinstreet"], // 精明消費達人 → 五分埔、華陰街
-			O: ["dihua", "dadaocheng"], // 文化探索者 → 迪化街、大稻埕
-			N: ["dadaocheng", "ximending"], // 文青生活家 → 大稻埕、西門町
-			M: ["shilin", "ximending"], // 美食獵人 → 士林、西門町
-			P: ["shilin", "dihua"], // 在地美食通 → 士林、迪化街
-			J: ["dongqu", "ximending"], // 居酒屋愛好者 → 東區、西門町
-			K: ["xinyi", "dongqu"], // 夜生活玩家 → 信義、東區
-		};
+		// 使用新的商圈推薦邏輯
+		const districtIds = result.districts || ["shilin"];
 
-		const districtIds = districtMapping[resultType] || ["shilin"];
+		// 使用 districts.js 的數據
 		recommendedDistricts.value = districtIds
-			.map((id) => districtData[id])
+			.map((id) => getDistrictById(id))
 			.filter(Boolean);
 
 		console.log("測驗結果:", quizResult.value);
@@ -590,20 +871,31 @@ export function useQuiz() {
 		currentScreen.value = "result";
 	};
 
+	// 取得推薦時間
+	const getRecommendedTime = (profile) => {
+		if (profile.timePreference === "day") {
+			if (profile.activity === "relax") return "平日下午 14:00-17:00";
+			return "週末上午 10:00-17:00";
+		} else {
+			if (profile.activity === "food") return "每日 17:00-22:00";
+			return "週末夜晚 19:00-23:00";
+		}
+	};
+
 	// 取得預算範圍
 	const getBudgetRange = (profile) => {
-		if (profile.budget === "high") {
-			return "NT$ 1,000-3,000";
-		} else if (profile.budget === "low") {
+		if (profile.budget === "high" || profile.style === "premium") {
+			return "NT$ 1,500-4,000";
+		} else if (profile.budget === "low" || profile.style === "practical") {
 			return "NT$ 300-1,000";
 		} else if (profile.activity === "food") {
-			return profile.foodStyle === "popular"
+			return profile.foodStyle === "famous"
 				? "NT$ 200-600"
 				: "NT$ 100-400";
-		} else if (profile.activity === "drinks") {
-			return profile.drinkStyle === "modern"
-				? "NT$ 500-1,500"
-				: "NT$ 300-800";
+		} else if (profile.activity === "relax") {
+			return profile.relaxStyle === "hotspring"
+				? "NT$ 300-800"
+				: "NT$ 150-500";
 		} else {
 			return "NT$ 200-800";
 		}
@@ -621,40 +913,107 @@ export function useQuiz() {
 
 		if (profile.activity === "shopping") {
 			if (profile.budget === "high") {
-				insights.push("你注重品質與品味，願意為優質體驗投資");
+				if (profile.atmosphere === "international") {
+					insights.push("你擁有國際化的視野，喜歡多元文化的購物體驗");
+				} else {
+					insights.push("你注重品質與品味，願意為優質體驗投資");
+				}
 			} else {
-				insights.push("你善於發現物超所值的好東西，是個聰明的消費者");
+				if (profile.shoppingStyle === "wholesale") {
+					insights.push("你有敏銳的商業嗅覺，善於在批發市場挖掘寶物");
+				} else {
+					insights.push(
+						"你善於發現物超所值的好東西，是個聰明的消費者"
+					);
+				}
 			}
 		} else if (profile.activity === "culture") {
-			if (profile.style === "traditional") {
-				insights.push("你對歷史文化有深厚興趣，喜歡探索傳統之美");
+			if (profile.cultureStyle === "traditional") {
+				if (profile.focus === "market") {
+					insights.push(
+						"你熱愛台灣的傳統市場文化，享受人情味與道地美食"
+					);
+				} else {
+					insights.push(
+						"你對台灣傳統文化有深厚興趣，喜歡探索在地人情味"
+					);
+				}
 			} else {
-				insights.push("你被現代創意吸引，追求新穎的文化體驗");
+				if (profile.focus === "architecture") {
+					insights.push(
+						"你有獨特的美學眼光，對歷史建築有深度的鑑賞能力"
+					);
+				} else {
+					insights.push(
+						"你被歷史建築與復古風情吸引，追求文藝的生活體驗"
+					);
+				}
 			}
-		} else if (profile.activity === "nature") {
-			if (profile.relaxStyle === "active") {
-				insights.push("你喜歡主動的休閒方式，追求身心的全面放鬆");
+		} else if (profile.activity === "relax") {
+			if (profile.relaxStyle === "hotspring") {
+				if (profile.hotelStyle === "mountain") {
+					insights.push(
+						"你親近自然，偏愛在山林中找到內心的平靜與療癒"
+					);
+				} else {
+					insights.push("你懂得照顧自己，重視身心靈的放鬆與療癒");
+				}
 			} else {
-				insights.push("你偏好靜態的休憩時光，享受寧靜致遠的雅緻");
+				if (profile.cafeStyle === "bookstore") {
+					insights.push(
+						"你是個知性的人，喜歡在書香與咖啡中度過悠閒時光"
+					);
+				} else {
+					insights.push("你有敏銳的美學觸角，被創意設計深深吸引");
+				}
 			}
 		} else if (profile.activity === "food") {
-			if (profile.foodStyle === "popular") {
-				insights.push("你樂於嘗試熱門美食，享受與人分享的樂趣");
+			if (profile.foodStyle === "famous") {
+				if (profile.foodFocus === "atmosphere") {
+					insights.push(
+						"你不只愛美食，更享受夜市文化的熱鬧氛圍與人情味"
+					);
+				} else {
+					insights.push("你樂於嘗試知名美食，享受與人分享的樂趣");
+				}
 			} else {
-				insights.push("你是個美食探險家，喜歡發掘隱藏的在地美味");
+				if (profile.discovery === "locals") {
+					insights.push(
+						"你重視人際關係，喜歡跟著在地人發現真正的美味"
+					);
+				} else {
+					insights.push("你是個美食探險家，喜歡發掘隱藏的在地美味");
+				}
 			}
-		} else if (profile.activity === "drinks") {
-			if (profile.drinkStyle === "traditional") {
-				insights.push("你偏愛溫馨的飲酒環境，重視人情味與氛圍");
+		} else if (profile.activity === "nightlife") {
+			if (profile.nightStyle === "upscale") {
+				if (profile.nightFocus === "cocktail") {
+					insights.push(
+						"你欣賞專業的調酒技藝，品味每杯酒背後的創意故事"
+					);
+				} else {
+					insights.push("你追求精緻的夜生活體驗，喜歡都會的時尚氛圍");
+				}
 			} else {
-				insights.push("你追求現代化的夜生活體驗，喜歡時尚潮流");
+				if (profile.nightFocus === "sake") {
+					insights.push(
+						"你對日式酒文化有深度了解，享受清酒帶來的文化體驗"
+					);
+				} else {
+					insights.push(
+						"你偏愛溫馨的社交環境，重視人情味與真誠的交流"
+					);
+				}
 			}
-		} else if (profile.activity === "chill") {
-			if (profile.chillStyle === "nostalgic") {
-				insights.push("你是個懷舊的浪漫主義者，被歷史故事深深吸引");
-			} else {
-				insights.push("你嚮往都會的現代美感，享受城市的繁華與精緻");
-			}
+		}
+
+		// 根據最終選擇添加洞察
+		if (profile.finalChoice === "diverse") {
+			insights.push("你有開放包容的心態，喜歡體驗城市的多樣面貌");
+		} else if (profile.finalChoice === "focused") {
+			insights.push("你追求深度體驗，在專注中發現生活的豐富層次");
+		} else if (profile.finalChoice === "spontaneous") {
+			insights.push("你享受自由探索的樂趣，讓城市的驚喜自然發生");
 		}
 
 		return insights;

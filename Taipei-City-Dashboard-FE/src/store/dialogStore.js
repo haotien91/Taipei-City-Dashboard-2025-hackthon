@@ -45,6 +45,7 @@ export const useDialogStore = defineStore("dialog", {
 			addViewPoint: false,
 			findClosestPoint: false,
 			districtInfo: false, // 行政區資訊彈跳視窗
+			districtDetail: false, // 商圈詳細資訊對話框
 		},
 		// Stores the content for notifications
 		notification: {
@@ -68,6 +69,8 @@ export const useDialogStore = defineStore("dialog", {
 		addEdit: "",
 		// Stores the current timeout for notifications
 		curTimeout: null,
+		// Stores the selected district for detail dialog
+		selectedDistrict: null,
 	}),
 	getters: {},
 	actions: {
