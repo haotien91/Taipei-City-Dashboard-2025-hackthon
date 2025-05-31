@@ -802,3 +802,19 @@ export function useMap(containerId: string) {
   }
 }
 ```
+
+## Reference (你每一次改動都需要閱讀)
+### [競賽規則.md](mdc:Reference-for-AI/Hackthon/競賽規則.md)
+這是這場 Hackthon 比賽的競賽規則
+
+### [0526-discussion.md](mdc:Reference-for-AI/Hackthon/0526-discussion.md)
+這是我們在 05/26 時討論的結果，包含想法初步發想、初步的執行方案。
+
+### @Reference-for-AI/Docs/*
+這些是專案的實作 Document, 分為 BE (backend), DE, (data-end), FE(front-end) 三個主要區塊，以及 Common (專案基本介紹)
+
+
+
+
+
+
