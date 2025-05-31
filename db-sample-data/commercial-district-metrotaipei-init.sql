@@ -66,16 +66,39 @@ ON CONFLICT (index) DO UPDATE SET
 INSERT INTO public.components (index, name)
 VALUES (
     'commercial_district_density_metrotaipei',
-    '雙北市集活動分佈'
+    '雙北商圈密度分布'
 )
 ON CONFLICT (index) DO UPDATE SET
     name = EXCLUDED.name;
 
--- 7. 刪除現有查詢配置，避免重複
+-- 7. 新增/更新圖表配置 - 商圈排行榜
+INSERT INTO public.component_charts (index, color, types, unit)
+VALUES (
+    'commercial_district_ranking_metrotaipei',
+    '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}',
+    '{CommercialDistrictRanking}',
+    '個'
+)
+ON CONFLICT (index) DO UPDATE SET
+    color = EXCLUDED.color,
+    types = EXCLUDED.types,
+    unit = EXCLUDED.unit;
+
+-- 8. 新增/更新組件 - 商圈排行榜
+INSERT INTO public.components (index, name)
+VALUES (
+    'commercial_district_ranking_metrotaipei',
+    '雙北商圈排行榜'
+)
+ON CONFLICT (index) DO UPDATE SET
+    name = EXCLUDED.name;
+
+-- 9. 刪除現有查詢配置，避免重複
 DELETE FROM public.query_charts WHERE index = 'commercial_district_flow_metrotaipei';
 DELETE FROM public.query_charts WHERE index = 'commercial_district_density_metrotaipei';
+DELETE FROM public.query_charts WHERE index = 'commercial_district_ranking_metrotaipei';
 
--- 8. 新增查詢配置 - 人流分析 (雙北版本)
+-- 10. 新增查詢配置 - 人流分析 (雙北版本)
 INSERT INTO public.query_charts (
     index,
     history_config,
@@ -128,7 +151,7 @@ VALUES (
     'metrotaipei'
 );
 
--- 9. 新增查詢配置 - 人流分析 (台北市版本)
+-- 11. 新增查詢配置 - 人流分析 (台北市版本)
 INSERT INTO public.query_charts (
     index,
     history_config,
@@ -187,7 +210,7 @@ VALUES (
     'taipei'
 );
 
--- 10. 新增商圈密度行政區查詢配置 (雙北版本)
+-- 12. 新增商圈密度行政區查詢配置 (雙北版本)
 INSERT INTO public.query_charts (
     index,
     history_config,
@@ -260,7 +283,7 @@ VALUES (
     'metrotaipei'
 );
 
--- 11. 新增商圈密度行政區查詢配置 (台北市版本)
+-- 13. 新增商圈密度行政區查詢配置 (台北市版本)
 INSERT INTO public.query_charts (
     index,
     history_config,
@@ -333,12 +356,86 @@ VALUES (
     'taipei'
 );
 
--- 12. 自動更新儀表板的 components 欄位
+-- 14. 新增查詢配置 - 商圈排行榜 (雙北版本)
+INSERT INTO public.query_charts (
+    index,
+    history_config,
+    map_config_ids,
+    map_filter,
+    time_from,
+    time_to,
+    update_freq,
+    update_freq_unit,
+    source,
+    short_desc,
+    long_desc,
+    use_case,
+    links,
+    contributors,
+    created_at,
+    updated_at,
+    query_type,
+    query_chart,
+    query_history,
+    city
+)
+VALUES (
+    'commercial_district_ranking_metrotaipei',
+    NULL,
+    '{}',
+    '{}',
+    'current',
+    NULL,
+    0.2,
+    'minute',
+    '商業處',
+    '顯示雙北商圈綜合排行榜',
+    '此組件展示雙北地區商圈的綜合排名，包含人流量、商店數量、平均營業額等多維度指標。透過即時數據更新，提供動態的商圈表現評估，協助商家和政策制定者掌握商圈發展趨勢。',
+    '適用於商圈競爭力分析、投資決策參考、及商業地產評估。可幫助連鎖企業選址、政府制定商圈振興政策，以及消費者了解熱門商圈動態。',
+    '{}',
+    '{doit,ntpc}',
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP,
+    'three_d',
+    'SELECT x_axis, y_axis, data FROM (VALUES 
+        (''信義商圈'', ''人流量'', 15000),
+        (''西門町商圈'', ''人流量'', 12000),
+        (''板橋商圈'', ''人流量'', 10000),
+        (''東區商圈'', ''人流量'', 9500),
+        (''中和環球商圈'', ''人流量'', 8800),
+        (''天母商圈'', ''人流量'', 8500),
+        (''三重商圈'', ''人流量'', 8200),
+        (''士林夜市商圈'', ''人流量'', 8000),
+        
+        (''信義商圈'', ''商店數'', 450),
+        (''西門町商圈'', ''商店數'', 380),
+        (''板橋商圈'', ''商店數'', 320),
+        (''東區商圈'', ''商店數'', 300),
+        (''中和環球商圈'', ''商店數'', 280),
+        (''天母商圈'', ''商店數'', 260),
+        (''三重商圈'', ''商店數'', 240),
+        (''士林夜市商圈'', ''商店數'', 220),
+        
+        (''信義商圈'', ''營業額'', 180),
+        (''西門町商圈'', ''營業額'', 150),
+        (''板橋商圈'', ''營業額'', 130),
+        (''東區商圈'', ''營業額'', 145),
+        (''中和環球商圈'', ''營業額'', 125),
+        (''天母商圈'', ''營業額'', 135),
+        (''三重商圈'', ''營業額'', 120),
+        (''士林夜市商圈'', ''營業額'', 110)
+    ) AS t(x_axis, y_axis, data)',
+    NULL,
+    'metrotaipei'
+);
+
+-- 15. 自動更新儀表板的 components 欄位
 -- 此步驟將新創建的組件 ID 加入到儀表板配置中
 UPDATE public.dashboards 
 SET components = ARRAY[
     (SELECT id FROM public.components WHERE index = 'commercial_district_flow_metrotaipei'),
-    (SELECT id FROM public.components WHERE index = 'commercial_district_density_metrotaipei')
+    (SELECT id FROM public.components WHERE index = 'commercial_district_density_metrotaipei'),
+    (SELECT id FROM public.components WHERE index = 'commercial_district_ranking_metrotaipei')
 ]
 WHERE index = 'commercial_district_metrotaipei';
 
@@ -347,7 +444,7 @@ DO $$
 BEGIN
     RAISE NOTICE '=== 雙北商圈活化儀表板初始化完成 ===';
     RAISE NOTICE '儀表板名稱: 商圈活化 (雙北版本)';
-    RAISE NOTICE '組件數量: 2 (雙北商圈人流分析 + 雙北市集活動分佈)';
+    RAISE NOTICE '組件數量: 3 (雙北商圈人流分析 + 雙北市集活動分佈 + 雙北商圈排行榜)';
     RAISE NOTICE '群組權限: metrotaipei';
     RAISE NOTICE '涵蓋範圍: 台北市12區 + 新北市12主要區域';
     RAISE NOTICE '新增功能: 跨市行政區圖 (雙北市集活動分佈)';
