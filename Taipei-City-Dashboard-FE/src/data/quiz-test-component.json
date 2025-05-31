@@ -1,0 +1,27 @@
+{
+	"id": "quiz-component-001",
+	"index": "QUIZ001",
+	"name": "台北商圈心理測驗",
+	"short_desc": "透過心理測驗，找到最適合你的台北商圈！",
+	"long_desc": "這是一個互動式的心理測驗，通過分析你的消費習慣、喜好風格、活動偏好等因素，為你推薦最適合的台北商圈。測驗包含4個問題，根據你的答案會推薦1-3個符合你性格的商圈，並提供詳細的商圈資訊、交通指南、預算參考等實用資訊。",
+	"source": "台北市政府 x 心理學研究",
+	"time_from": "static",
+	"time_to": "static",
+	"update_freq": null,
+	"update_freq_unit": null,
+	"chart_config": {
+		"types": ["QuizChart"],
+		"unit": "個人化推薦"
+	},
+	"chart_data": {
+		"status": "ready",
+		"message": "心理測驗資料已準備就緒"
+	},
+	"map_config": null,
+	"map_filter": null,
+	"history_config": null,
+	"tags": ["互動", "推薦", "商圈", "心理測驗"],
+	"contributors": ["台北城市儀表板團隊"],
+	"created_at": "2024-01-01T00:00:00Z",
+	"updated_at": "2024-01-01T00:00:00Z"
+}

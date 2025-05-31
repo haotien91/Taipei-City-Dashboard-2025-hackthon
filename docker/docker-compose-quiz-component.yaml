@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  dashboard-be-init-quiz:
+    image: golang:${GOLANG_IMAGE_TAG:-latest}
+    container_name: dashboard-be-init-quiz
+    environment:
+      DB_MANAGER_HOST: ${DB_MANAGER_HOST:-postgres-manager}
+      DB_MANAGER_USER: ${DB_MANAGER_USER}
+      DB_MANAGER_PASSWORD: ${DB_MANAGER_PASSWORD}
+      PGPASSWORD: ${DB_MANAGER_PASSWORD}
+      DB_MANAGER_DBNAME: ${DB_MANAGER_DBNAME:-dashboardmanager}
+      DB_MANAGER_PORT: ${DB_MANAGER_PORT:-5432}
+      MANAGER_SAMPLE_FILE: quiz-component-init.sql
+    volumes:
+      - ../Taipei-City-Dashboard-BE:/opt/Taipei-City-Dashboard-BE
+      - ../db-sample-data:/opt/db-sample-data
+    working_dir: /opt/Taipei-City-Dashboard-BE
+    command: ["go", "run", "main.go", "migrateDB"]
+
+networks:
+  default:
+    name: br_dashboard
+    external: true
