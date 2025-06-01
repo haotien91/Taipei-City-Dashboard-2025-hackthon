@@ -37,73 +37,101 @@
 
 **情況1: 首次設置或環境變數丟失**
 ```bash
-./switch-to-permanent-init.sh
+./scripts/switch-to-permanent-init.sh
 ```
 
 **情況2: 驗證配置是否正確**
 ```bash
-./test-permanent-solution.sh
+./scripts/test-permanent-solution.sh
 ```
 
-**情況3: 重新生成永久配置**
+**情況3: 配置有更新需要重新生成**
 ```bash
-./create-permanent-init.sh
-./switch-to-permanent-init.sh
+./scripts/create-permanent-init.sh
 ```
 
-## 🗂️ 目錄結構
-
-```
-scripts/
-├── 📖 README.md                          # 本說明文檔
-├── 🔧 create-permanent-init.sh           # 生成永久配置
-├── ⚙️ switch-to-permanent-init.sh        # 環境變數切換
-├── 🧪 test-permanent-solution.sh         # 測試腳本
-├── 📚 商圈活化永久化解決方案.md           # 完整文檔
-├── 🧹 cleanup-unused-files.sh            # 清理工具
-└── modules/
-    └── 🛠️ create-component.sh            # 組件創建工具
+**情況4: 系統維護清理**
+```bash
+./scripts/cleanup-unused-files.sh
 ```
 
-## 📊 商圈活化功能
+## 📊 已整合功能
 
-### 台北版本
-- 📊 儀表板: "商圈活化"
-- 🧩 組件: 商圈人流分析、市集活動分佈
-- 🗺️ 動態地圖: 彩色市集活動狀態顯示
+✅ **商圈活化儀表板**
+- 市集活動分佈
+- 台北商圈心理測驗 ⭐
+- 雙北市集活動分佈 ⭐
+- 雙北商圈排行榜
 
-### 雙北版本
-- 📊 儀表板: "雙北儀表板示範" → "商圈活化"
-- 🧩 組件: 雙北商圈人流分析、雙北市集活動分佈
-- 🗺️ 動態地圖: 雙北市集活動狀態顯示
+✅ **動態地圖功能**  
+- 🔵 Blue: 尚未開始的市集活動 (39個)
+- 🟢 Green: 進行中的市集活動 (18個)  
+- 🔴 Red: 即將結束的市集活動 (2個)
 
-### 動態顏色系統
-- 🔵 藍色: 尚未開始 (39個活動)
-- 🟢 綠色: 進行中 (18個活動)
-- 🔴 紅色: 即將結束 (2個活動)
+✅ **系統特性**
+- 自動載入配置
+- 跨城市支援 (台北+雙北)
+- 即時狀態計算
+- 永久化配置
 
-## 🆘 問題排查
+## 🗑️ 已清理的過時文件
 
-### Q: 看不到商圈活化選項？
-A: 執行 `./test-permanent-solution.sh` 檢查配置
+### 🗂️ 清理統計 (2025/06/01)
 
-### Q: 地圖沒有顏色變化？
-A: 檢查動態地圖功能是否正常載入
+| 類別 | 清理前 | 清理後 | 減少 |
+|------|--------|--------|------|
+| 📁 Scripts | 20個文件 | 6個文件 | **-70%** |
+| 📄 SQL文件 | 13個文件 | 3個文件 | **-77%** |
+| 🐳 Docker Compose | 7個文件 | 3個文件 | **-57%** |
 
-### Q: 需要恢復舊版腳本？
-A: 查看 `cleanup-backup-*` 目錄中的備份文件
+### 🗑️ 已移除的過時腳本
+- `setup-quiz-component.sh` (心理測驗組件設置 - 已整合)
+- `setup-commercial-district*.sh` (商圈設置腳本 - 已整合)
+- `setup-market-map*.sh` (市集地圖設置 - 已整合)
+- `restore-dynamic-map-config.sh` (動態地圖恢復 - 已整合)
+- 動態地圖功能使用指南 (已整合到解決方案文檔)
 
-### Q: 想了解技術細節？
-A: 閱讀 `商圈活化永久化解決方案.md`
+### 🗑️ 已移除的過時 SQL 文件
+- `quiz-component-init.sql` (已整合到 permanent.sql)
+- `commercial-district-*.sql` (已整合到 permanent.sql)
+- `market-events-*-init.sql` (已整合到 permanent.sql)
 
-## 📞 支援資訊
+### 🗑️ 已移除的過時 Docker Compose 文件
+- `docker-compose-quiz-component.yaml`
+- `docker-compose-commercial-district*.yaml`
+- `docker-compose-market-map.yaml`
 
-- 📖 **完整文檔**: `商圈活化永久化解決方案.md`
-- 🧪 **測試工具**: `test-permanent-solution.sh`
-- 🗄️ **備份位置**: `cleanup-backup-*` 目錄
-- 🔧 **環境設定**: `.env` 文件中的 `MANAGER_SAMPLE_FILE=dashboardmanager-permanent.sql`
+## 🔄 故障排除
 
----
+### ❓ 常見問題
 
-> 🎉 **永久化解決方案已完成！**  
-> 系統現在會自動載入商圈活化功能，無需手動執行腳本。 
+**Q: 看不到商圈活化功能？**
+A: 檢查環境變數設定：
+```bash
+cat .env | grep MANAGER_SAMPLE_FILE
+# 應該顯示: MANAGER_SAMPLE_FILE=dashboardmanager-permanent.sql
+```
+
+**Q: 在其他機器上部署時出現找不到文件錯誤？**
+A: 確保使用最新的永久化配置：
+```bash
+# 檢查是否有完整的永久配置文件
+ls -la db-sample-data/dashboardmanager-permanent.sql
+
+# 如果沒有，重新生成
+./scripts/create-permanent-init.sh
+```
+
+**Q: 動態地圖顏色不正確？**
+A: 重新初始化系統：
+```bash
+docker-compose down
+docker-compose up -d
+```
+
+## 📞 支援
+
+如有任何問題，請參考：
+1. `商圈活化永久化解決方案.md` - 完整文檔
+2. 執行 `./scripts/test-permanent-solution.sh` - 自動診斷
+3. 檢查 Docker 容器日誌 

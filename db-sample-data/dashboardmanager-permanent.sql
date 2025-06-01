@@ -54,9 +54,7 @@ INSERT INTO public.component_charts VALUES ('aging_workforce_trend', '{#24B0DD,#
 INSERT INTO public.component_charts VALUES ('bike_network', '{#a0b8e8,#b7ff98}', '{DonutChart,BarChart}', '公里');
 INSERT INTO public.component_charts VALUES ('bike_map', '{#a0b8e8,#b7ff98}', '{MapLegend}', '條');
 INSERT INTO public.component_charts VALUES ('quiz_component', '{#667eea,#764ba2,#9c88ff,#a29bfe,#6c5ce7,#74b9ff}', '{QuizChart}', '推薦');
-INSERT INTO public.component_charts VALUES ('commercial_district_flow', '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}', '{ColumnChart,LineChart,HeatmapChart}', '人');
 INSERT INTO public.component_charts VALUES ('commercial_district_density', '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}', '{DistrictChart}', '個');
-INSERT INTO public.component_charts VALUES ('commercial_district_flow_metrotaipei', '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}', '{ColumnChart,LineChart,HeatmapChart}', '人');
 INSERT INTO public.component_charts VALUES ('commercial_district_density_metrotaipei', '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}', '{DistrictChart}', '個');
 INSERT INTO public.component_charts VALUES ('commercial_district_ranking_metrotaipei', '{#FF6B6B,#4ECDC4,#45B7D1,#96CEB4,#FFEEAD,#D4A5A5,#9B59B6,#3498DB}', '{CommercialDistrictRanking}', '個');
 
@@ -107,9 +105,7 @@ INSERT INTO public.components VALUES (216, 'city_age_distribution', '全市年�
 INSERT INTO public.components VALUES (218, 'aging_kpi', '長照指標');
 INSERT INTO public.components VALUES (215, 'aging_workforce_trend', '高齡就業人口之年增結構');
 INSERT INTO public.components VALUES (217, 'bike_map', '自行車道路網圖資');
-INSERT INTO public.components VALUES (219, 'commercial_district_flow', '商圈人流分析');
 INSERT INTO public.components VALUES (220, 'commercial_district_density', '市集活動分佈');
-INSERT INTO public.components VALUES (221, 'commercial_district_flow_metrotaipei', '雙北商圈人流分析');
 INSERT INTO public.components VALUES (61, 'commercial_district_ranking_metrotaipei', '雙北商圈排行榜');
 INSERT INTO public.components VALUES (222, 'commercial_district_density_metrotaipei', '雙北市集活動分佈');
 INSERT INTO public.components VALUES (223, 'quiz_component', '台北商圈心理測驗');
@@ -135,9 +131,9 @@ INSERT INTO public.dashboards VALUES (358, 'practical_transportation_newtpe', '�
 INSERT INTO public.dashboards VALUES (1, '09a25cd9cb7d', '收藏組件', NULL, 'favorite', '2025-03-14 07:34:22.247753+00', '2025-03-14 07:34:22.247753+00');
 INSERT INTO public.dashboards VALUES (2, '3245d9eace5f', '我的新儀表板', '{215,218,216,213,212,214,60,146}', 'star', '2025-03-14 14:55:11.732116+00', '2025-03-14 14:55:11.732116+00');
 INSERT INTO public.dashboards VALUES (360, '5a49ee3bd2f1', '收藏組件', NULL, 'favorite', '2025-05-26 12:09:41.648926+00', '2025-05-26 12:09:41.648926+00');
-INSERT INTO public.dashboards VALUES (363, 'commercial_district_metrotaipei', '商圈活化', '{221,222,61}', 'store', '2025-05-31 18:54:10.771376+00', '2025-05-31 07:21:58.257472+00');
 INSERT INTO public.dashboards VALUES (381, 'quiz_dashboard', '商圈探索測驗', '{223}', 'psychology', '2025-06-01 00:05:36.874327+00', '2025-06-01 00:05:36.874327+00');
-INSERT INTO public.dashboards VALUES (361, 'commercial_district', '商圈活化', '{219,220,223}', 'store', '2025-05-31 18:53:37.261191+00', '2025-05-31 07:03:13.698496+00');
+INSERT INTO public.dashboards VALUES (361, 'commercial_district', '商圈活化', '{220,223}', 'store', '2025-05-31 18:53:37.261191+00', '2025-05-31 07:03:13.698496+00');
+INSERT INTO public.dashboards VALUES (363, 'commercial_district_metrotaipei', '商圈活化', '{222,61}', 'store', '2025-05-31 18:54:10.771376+00', '2025-05-31 07:21:58.257472+00');
 
 
 --
@@ -442,29 +438,6 @@ INSERT INTO public.query_charts VALUES ('youbike_availability', NULL, '{70}', NU
 unnest(ARRAY[''可借車輛'', ''空位'']) as y_axis, 
 unnest(ARRAY[SUM(available_rent_general_bikes), SUM(available_return_bikes)]) as data
 from tran_ubike_realtime', NULL, 'taipei');
-INSERT INTO public.query_charts VALUES ('commercial_district_flow', NULL, '{}', '{}', 'current', NULL, 10, 'minute', '商業處', '顯示商圈人流分析', '此圖表呈現商圈人流分析，包括各時段人流變化、熱門時段分析等資訊。透過即時數據監控，協助商家了解客流趨勢，優化營運策略。', '可用於商圈經營分析、活動規劃與商業決策參考。適合店家評估最佳營業時段、政府規劃商圈活動時機，以及投資者評估商圈發展潛力。', '{}', '{doit}', '2025-05-31 18:53:37.286909+00', '2025-05-31 18:53:37.286909+00', 'three_d', 'SELECT ''商圈'' as x_axis, ''人流量'' as y_axis, 1000 as data UNION ALL SELECT ''商圈'' as x_axis, ''店家數'' as y_axis, 50 as data', NULL, 'taipei');
-INSERT INTO public.query_charts VALUES ('commercial_district_flow_metrotaipei', NULL, '{}', '{}', 'current', NULL, 10, 'minute', '商業處', '顯示雙北商圈人流分析', '此圖表呈現雙北地區商圈人流分析，包括台北市與新北市各商圈的人流變化、熱門時段分析等資訊。透過跨市即時數據監控，協助商家了解區域客流趨勢，優化營運策略，促進雙北商圈整體發展。', '可用於雙北商圈經營分析、跨市活動規劃與商業決策參考。適合連鎖店家評估雙北展店策略、政府規劃跨市商圈活動，以及投資者評估雙北商圈發展潛力與區域差異。', '{}', '{doit,ntpc}', '2025-05-31 18:54:10.799011+00', '2025-05-31 18:54:10.799011+00', 'three_d', 'SELECT x_axis, y_axis, data FROM (VALUES 
-        (''台北商圈'', ''人流量'', 1200),
-        (''新北商圈'', ''人流量'', 800),
-        (''台北商圈'', ''店家數'', 60),
-        (''新北商圈'', ''店家數'', 45),
-        (''台北商圈'', ''營業額'', 150),
-        (''新北商圈'', ''營業額'', 120)
-    ) AS t(x_axis, y_axis, data)', NULL, 'metrotaipei');
-INSERT INTO public.query_charts VALUES ('commercial_district_flow_metrotaipei', NULL, '{}', '{}', 'current', NULL, 10, 'minute', '商業處', '顯示台北市商圈人流分析', '此圖表呈現台北市商圈人流分析，包括各商圈的人流變化、熱門時段分析等資訊。透過即時數據監控，協助商家了解客流趨勢，優化營運策略，促進台北市商圈發展。', '可用於台北市商圈經營分析、活動規劃與商業決策參考。適合店家評估最佳營業時段、政府規劃商圈活動時機，以及投資者評估商圈發展潛力。', '{}', '{doit}', '2025-05-31 18:54:10.799557+00', '2025-05-31 18:54:10.799557+00', 'three_d', 'SELECT x_axis, y_axis, data FROM (VALUES 
-        (''西門町'', ''人流量'', 800),
-        (''信義區'', ''人流量'', 1200),
-        (''東區'', ''人流量'', 900),
-        (''士林夜市'', ''人流量'', 600),
-        (''西門町'', ''店家數'', 35),
-        (''信義區'', ''店家數'', 60),
-        (''東區'', ''店家數'', 45),
-        (''士林夜市'', ''店家數'', 25),
-        (''西門町'', ''營業額'', 120),
-        (''信義區'', ''營業額'', 180),
-        (''東區'', ''營業額'', 150),
-        (''士林夜市'', ''營業額'', 90)
-    ) AS t(x_axis, y_axis, data)', NULL, 'taipei');
 INSERT INTO public.query_charts VALUES ('commercial_district_density', NULL, '{13}', '{}', 'static', NULL, NULL, NULL, '商業處', '顯示各行政區市集活動分佈', '此圖表呈現台北市各行政區的市集活動分佈，包括市集數量、展覽活動等指標。透過行政區視覺化，協助了解各區市集活動狀況，為商圈活化政策提供數據支撐。', '可用於市集活動政策制定、投資評估與區域發展規劃。適合政府部門評估市集發展潛力、投資者選址參考，以及商業顧問進行市場分析。', '{}', '{doit}', '2025-05-31 18:53:37.288175+00', '2025-05-31 18:53:37.288175+00', 'three_d', 'SELECT x_axis, y_axis, data FROM (VALUES 
         (''北投區'', ''商店數量'', 120),
         (''士林區'', ''商店數量'', 280),
