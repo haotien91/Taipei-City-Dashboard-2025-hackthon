@@ -88,7 +88,7 @@ ON CONFLICT (index) DO UPDATE SET
 INSERT INTO public.components (index, name)
 VALUES (
     'commercial_district_ranking_metrotaipei',
-    '雙北商圈排行榜'
+    '雙北商圈分類榜'
 )
 ON CONFLICT (index) DO UPDATE SET
     name = EXCLUDED.name;

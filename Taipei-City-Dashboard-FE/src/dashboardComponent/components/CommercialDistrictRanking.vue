@@ -1,21 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, onUnmounted } from 'vue'
-import { useTheme } from 'vuetify'
+import { ref, computed } from 'vue'
 
-// 定義排序類型
-type SortType = 'flow' | 'revenue' | 'stores'
-type CityType = 'taipei' | 'new_taipei' | 'all'
+// 定義商圈類型
+type DistrictType = '美食商圈' | '生活機能型' | '觀光休閒' | '觀光夜市' | '日常消費型' | '其他'
 
 // 定義數據接口
 interface DistrictData {
-  id: string
-  rank: number
   name: string
-  flowCount: number
-  storeCount: number
-  averageRevenue: number
-  trend: number
-  city: 'taipei' | 'new_taipei'
+  type: DistrictType
+  city: '台北' | '新北'
 }
 
 // 組件屬性
@@ -25,198 +18,117 @@ const props = defineProps<{
   height?: string | number
 }>()
 
-// 響應式狀態
-const selectedCity = ref<CityType>('all')
-const sortBy = ref<SortType>('flow')
-const page = ref(1)
-const itemsPerPage = 8
-const currentDataSetIndex = ref(0)
-const isTransitioning = ref(false)
+// 商圈數據
+const commercialDistricts: DistrictData[] = [
+  { name: '新北投溫泉商圈', type: '觀光休閒', city: '台北' },
+  { name: '行義路溫泉美食商圈', type: '觀光休閒', city: '台北' },
+  { name: '石牌捷運商圈', type: '生活機能型', city: '台北' },
+  { name: '士林捷運站周邊', type: '美食商圈', city: '台北' },
+  { name: '士林觀光夜市商圈', type: '美食商圈', city: '台北' },
+  { name: '天母商圈', type: '美食商圈', city: '台北' },
+  { name: '承德路中古汽車商圈', type: '其他', city: '台北' },
+  { name: '蘭雅商圈', type: '生活機能型', city: '台北' },
+  { name: '朝陽服飾材料商圈', type: '日常消費型', city: '台北' },
+  { name: '迪化街商圈', type: '其他', city: '台北' },
+  { name: '後站商圈', type: '日常消費型', city: '台北' },
+  { name: '華陰街商圈', type: '日常消費型', city: '台北' },
+  { name: '大龍峒商圈', type: '其他', city: '台北' },
+  { name: '臺北大橋頭延三商圈', type: '觀光夜市', city: '台北' },
+  { name: '寧夏夜市商圈', type: '觀光夜市', city: '台北' },
+  { name: '圓山商圈', type: '美食商圈', city: '台北' },
+  { name: '赤峰街商圈', type: '日常消費型', city: '台北' },
+  { name: '愛國東路婚紗商圈', type: '其他', city: '台北' },
+  { name: '沅陵街商圈', type: '日常消費型', city: '台北' },
+  { name: '中華路影音商圈', type: '其他', city: '台北' },
+  { name: '北門相機商圈', type: '美食商圈', city: '台北' },
+  { name: '重慶南路書店商圈', type: '美食商圈', city: '台北' },
+  { name: '南昌家具商圈', type: '其他', city: '台北' },
+  { name: '大光華商圈', type: '其他', city: '台北' },
+  { name: '臺大公館商圈', type: '其他', city: '台北' },
+  { name: '榮町商圈', type: '其他', city: '台北' },
+  { name: '萬華街區商圈', type: '其他', city: '台北' },
+  { name: '艋舺商圈', type: '美食商圈', city: '台北' },
+  { name: '艋舺夜市商圈', type: '觀光夜市', city: '台北' },
+  { name: '西門町商圈', type: '美食商圈', city: '台北' },
+  { name: '和平西路鳥鋪聚集區', type: '其他', city: '台北' },
+  { name: '晴光商圈', type: '美食商圈', city: '台北' },
+  { name: '四平陽光商圈', type: '生活機能型', city: '台北' },
+  { name: '中山北路婚紗商圈', type: '其他', city: '台北' },
+  { name: '晶華酒店、欣欣百貨周邊', type: '其他', city: '台北' },
+  { name: '條通商圈', type: '其他', city: '台北' },
+  { name: '中山捷運站周邊', type: '美食商圈', city: '台北' },
+  { name: '吉林路美食', type: '美食商圈', city: '台北' },
+  { name: '中山國中捷運站周邊', type: '其他', city: '台北' },
+  { name: '民族濱江汽車', type: '其他', city: '台北' },
+  { name: '大直商圈', type: '生活機能型', city: '台北' },
+  { name: '東湖哈拉影城周邊', type: '生活機能型', city: '台北' },
+  { name: '內湖量販店區', type: '其他', city: '台北' },
+  { name: '內湖737商圈', type: '美食商圈', city: '台北' },
+  { name: '西湖商圈', type: '美食商圈', city: '台北' },
+  { name: '民權水族聚集區', type: '其他', city: '台北' },
+  { name: '南京復興捷運站周邊', type: '美食商圈', city: '台北' },
+  { name: '民生社區周邊', type: '其他', city: '台北' },
+  { name: '吳興街商圈', type: '美食商圈', city: '台北' },
+  { name: '五分埔商圈', type: '日常消費型', city: '台北' },
+  { name: '信義計畫區百貨', type: '其他', city: '台北' },
+  { name: '永春捷運站周邊', type: '美食商圈', city: '台北' },
+  { name: '東區商圈', type: '美食商圈', city: '台北' },
+  { name: '永康商圈', type: '美食商圈', city: '台北' },
+  { name: '建國南路藝品古玩', type: '其他', city: '台北' },
+  { name: '龍泉商圈', type: '日常消費型', city: '台北' },
+  { name: '文昌家具商圈', type: '其他', city: '台北' },
+  { name: '景美夜市周邊', type: '美食商圈', city: '台北' },
+  { name: '貓空商圈', type: '觀光夜市', city: '台北' },
+  { name: '萬芳商圈', type: '生活機能型', city: '台北' },
+  { name: '南港車站CITYLINK周邊', type: '美食商圈', city: '台北' },
+  { name: '中國信託金融園區', type: '其他', city: '台北' },
+  { name: '至聖花博商圈', type: '其他', city: '台北' },
+  { name: '加蚋商圈', type: '美食商圈', city: '台北' },
+  // 新北市商圈
+  { name: '板橋商圈', type: '生活機能型', city: '新北' },
+  { name: '中和環球商圈', type: '生活機能型', city: '新北' },
+  { name: '新莊商圈', type: '生活機能型', city: '新北' },
+  { name: '三重商圈', type: '美食商圈', city: '新北' },
+  { name: '永和樂華夜市商圈', type: '觀光夜市', city: '新北' },
+  { name: '淡水老街商圈', type: '觀光休閒', city: '新北' },
+  { name: '林口三井商圈', type: '生活機能型', city: '新北' },
+  { name: '汐止火車站商圈', type: '生活機能型', city: '新北' }
+]
 
-// 初始化所有數據集
-const initializeDataSets = () => {
-  const baseData = [
-    {
-      id: '1',
-      name: '信義商圈',
-      flowCount: 15000,
-      storeCount: 450,
-      averageRevenue: 180,
-      trend: 5.2,
-      city: 'taipei'
-    },
-    {
-      id: '2',
-      name: '西門町商圈',
-      flowCount: 12000,
-      storeCount: 380,
-      averageRevenue: 150,
-      trend: -2.1,
-      city: 'taipei'
-    },
-    {
-      id: '3',
-      name: '板橋商圈',
-      flowCount: 10000,
-      storeCount: 320,
-      averageRevenue: 130,
-      trend: 3.5,
-      city: 'new_taipei'
-    },
-    {
-      id: '4',
-      name: '東區商圈',
-      flowCount: 9500,
-      storeCount: 300,
-      averageRevenue: 145,
-      trend: -1.8,
-      city: 'taipei'
-    },
-    {
-      id: '5',
-      name: '中和環球商圈',
-      flowCount: 8800,
-      storeCount: 280,
-      averageRevenue: 125,
-      trend: 2.3,
-      city: 'new_taipei'
-    },
-    {
-      id: '6',
-      name: '天母商圈',
-      flowCount: 8500,
-      storeCount: 260,
-      averageRevenue: 135,
-      trend: 1.5,
-      city: 'taipei'
-    },
-    {
-      id: '7',
-      name: '三重商圈',
-      flowCount: 8200,
-      storeCount: 240,
-      averageRevenue: 120,
-      trend: -0.8,
-      city: 'new_taipei'
-    },
-    {
-      id: '8',
-      name: '士林夜市商圈',
-      flowCount: 8000,
-      storeCount: 220,
-      averageRevenue: 110,
-      trend: 0.5,
-      city: 'taipei'
-    }
-  ]
+// 選擇的城市和類型
+const selectedCity = ref<'台北' | '新北' | '全部'>('全部')
+const selectedType = ref<DistrictType | '全部'>('全部')
 
-  // 生成5組數據，每組數據都基於基礎數據進行隨機變化
-  return Array(5).fill(null).map(() => {
-    return baseData.map(item => ({
-      ...item,
-      flowCount: Math.round(item.flowCount * (1 + (Math.random() * 0.2 - 0.1))), // ±10%變化
-      storeCount: Math.round(item.storeCount * (1 + (Math.random() * 0.1 - 0.05))), // ±5%變化
-      averageRevenue: Math.round(item.averageRevenue * (1 + (Math.random() * 0.15 - 0.075))), // ±7.5%變化
-      trend: Number((Math.random() * 10 - 5).toFixed(1)) // -5%到+5%之間的趨勢
-    }))
-  })
-}
+// 商圈類型列表
+const districtTypes: (DistrictType | '全部')[] = ['全部', '美食商圈', '生活機能型', '觀光休閒', '觀光夜市', '日常消費型', '其他']
 
-// 初始化數據集
-const dataSets = initializeDataSets()
-
-// 當前數據集
-const currentData = computed(() => dataSets[currentDataSetIndex.value])
-
-// 計算屬性：排序字段映射
-const sortByField = computed(() => {
-  switch (sortBy.value) {
-    case 'flow': return 'flowCount'
-    case 'revenue': return 'averageRevenue'
-    case 'stores': return 'storeCount'
-    default: return 'flowCount'
-  }
-})
-
-// 計算屬性：過濾和排序後的數據
+// 過濾後的商圈列表
 const filteredDistricts = computed(() => {
-  let districts = currentData.value
-  if (selectedCity.value !== 'all') {
+  let districts = commercialDistricts
+
+  if (selectedCity.value !== '全部') {
     districts = districts.filter(d => d.city === selectedCity.value)
   }
-  return districts.sort((a, b) => b[sortByField.value] - a[sortByField.value])
-})
 
-// 計算屬性：當前顯示的數據
-const displayedDistricts = computed(() => {
-  return filteredDistricts.value.slice(0, page.value * itemsPerPage)
-})
-
-// 格式化數值
-const formatValue = (value: number) => {
-  if (value >= 10000) {
-    return (value / 10000).toFixed(1) + '萬'
+  if (selectedType.value !== '全部') {
+    districts = districts.filter(d => d.type === selectedType.value)
   }
-  return value.toLocaleString()
-}
 
-// 格式化趨勢
-const formatTrend = (trend: number) => {
-  const sign = trend > 0 ? '+' : ''
-  return `${sign}${trend.toFixed(1)}%`
-}
-
-// 獲取單位
-const getUnit = () => {
-  switch (sortBy.value) {
-    case 'flow': return '人次'
-    case 'revenue': return '萬元'
-    case 'stores': return '家'
-    default: return ''
-  }
-}
-
-// 處理滾動加載
-const rankingList = ref<HTMLElement | null>(null)
-const handleScroll = () => {
-  if (!rankingList.value) return
-  
-  const { scrollTop, scrollHeight, clientHeight } = rankingList.value
-  if (scrollTop + clientHeight >= scrollHeight - 50) {
-    if (page.value * itemsPerPage < filteredDistricts.value.length) {
-      page.value++
-    }
-  }
-}
-
-// 監聽排序和篩選變化
-watch([selectedCity, sortBy], () => {
-  page.value = 1
+  return districts
 })
 
-// 數據輪播定時器
-let dataRotationTimer: number | null = null
-
-// 切換到下一組數據
-const rotateData = () => {
-  isTransitioning.value = true
-  setTimeout(() => {
-    currentDataSetIndex.value = (currentDataSetIndex.value + 1) % dataSets.length
-    isTransitioning.value = false
-  }, 300)
-}
-
-// 組件掛載時啟動輪播
-onMounted(() => {
-  dataRotationTimer = window.setInterval(rotateData, 20000)
-})
-
-// 組件卸載時清理定時器
-onUnmounted(() => {
-  if (dataRotationTimer) {
-    clearInterval(dataRotationTimer)
+// 獲取類型的顏色
+const getTypeColor = (type: DistrictType) => {
+  const colors = {
+    '美食商圈': '#FF6B6B',
+    '生活機能型': '#4ECDC4',
+    '觀光休閒': '#FFD93D',
+    '觀光夜市': '#FF8B94',
+    '日常消費型': '#95E1D3',
+    '其他': '#A8E6CF'
   }
-})
+  return colors[type] || '#888888'
+}
 </script>
 
 <template>
@@ -229,48 +141,43 @@ onUnmounted(() => {
             v-model="selectedCity" 
             class="select-input"
           >
-            <option value="all">雙北</option>
-            <option value="taipei">台北</option>
-            <option value="new_taipei">新北</option>
+            <option value="全部">雙北</option>
+            <option value="台北">台北</option>
+            <option value="新北">新北</option>
           </select>
 
-          <!-- 排序方式下拉選單 -->
+          <!-- 商圈類型下拉選單 -->
           <select 
-            v-model="sortBy" 
+            v-model="selectedType" 
             class="select-input"
           >
-            <option value="flow">人流量</option>
-            <option value="revenue">營業額</option>
-            <option value="stores">商店數</option>
+            <option v-for="type in districtTypes" :key="type" :value="type">
+              {{ type }}
+            </option>
           </select>
         </div>
       </div>
     </div>
 
-    <!-- 排行榜列表 -->
-    <div class="ranking-list" ref="rankingList" @scroll="handleScroll">
+    <!-- 商圈列表 -->
+    <div class="ranking-list">
       <TransitionGroup 
         name="list" 
         tag="div"
-        :class="{ 'transitioning': isTransitioning }"
       >
         <div 
-          v-for="(district, index) in displayedDistricts" 
-          :key="district.id"
+          v-for="district in filteredDistricts" 
+          :key="district.name"
           class="ranking-item"
         >
           <div class="info">
             <div class="name">{{ district.name }}</div>
-            <div class="city-tag" :class="district.city">
-              {{ district.city === 'taipei' ? '台北' : '新北' }}
+            <div class="city-tag" :class="district.city === '台北' ? 'taipei' : 'new-taipei'">
+              {{ district.city }}
             </div>
           </div>
-          <div class="value">
-            <span class="number">{{ formatValue(district[sortByField]) }}</span>
-            <span class="unit">{{ getUnit() }}</span>
-          </div>
-          <div class="trend" :class="{ up: district.trend > 0, down: district.trend < 0 }">
-            {{ formatTrend(district.trend) }}
+          <div class="type-tag" :style="{ backgroundColor: getTypeColor(district.type) }">
+            {{ district.type }}
           </div>
         </div>
       </TransitionGroup>
@@ -291,7 +198,7 @@ onUnmounted(() => {
 }
 
 .header {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .select-group {
@@ -311,7 +218,7 @@ onUnmounted(() => {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  min-width: 100px;
+  min-width: 120px;
   position: relative;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 4L6 8L10 4' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -337,11 +244,11 @@ onUnmounted(() => {
   flex: 1;
   overflow-y: auto;
   padding-right: 8px;
-  margin-top: 4px;
 }
 
 .ranking-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
   background: rgba(255, 255, 255, 0.05);
@@ -357,16 +264,11 @@ onUnmounted(() => {
 .info {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex: 2;
+  gap: 12px;
 }
 
 .name {
   font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .city-tag {
@@ -374,49 +276,22 @@ onUnmounted(() => {
   padding: 2px 8px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.1);
-  white-space: nowrap;
 }
 
 .city-tag.taipei {
   color: #4ECDC4;
 }
 
-.city-tag.new_taipei {
+.city-tag.new-taipei {
   color: #FF6B6B;
 }
 
-.value {
-  flex: 1;
-  text-align: right;
-  white-space: nowrap;
-  margin-right: 16px;
-}
-
-.number {
-  font-size: 1.1em;
-  font-weight: 500;
-  margin-right: 4px;
-}
-
-.unit {
+.type-tag {
   font-size: 0.8em;
-  color: #888;
-}
-
-.trend {
-  min-width: 70px;
-  text-align: right;
-  font-size: 0.9em;
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: #1E1E1E;
   font-weight: 500;
-  white-space: nowrap;
-}
-
-.trend.up {
-  color: #4ECDC4;
-}
-
-.trend.down {
-  color: #FF6B6B;
 }
 
 /* 滾動條樣式 */
@@ -438,7 +313,29 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.3);
 }
 
-/* 排序動畫 */
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .select-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .select-input {
+    width: 100%;
+  }
+
+  .ranking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .type-tag {
+    align-self: flex-start;
+  }
+}
+
+/* 列表動畫 */
 .list-move,
 .list-enter-active,
 .list-leave-active {
@@ -453,33 +350,5 @@ onUnmounted(() => {
 
 .list-leave-active {
   position: absolute;
-}
-
-.transitioning .ranking-item {
-  transition: transform 0.3s ease-in-out;
-}
-
-/* 響應式設計 */
-@media (max-width: 768px) {
-  .select-group {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .select-input {
-    width: 100%;
-  }
-
-  .ranking-item {
-    padding: 10px 12px;
-  }
-
-  .value {
-    margin: 0 12px;
-  }
-
-  .trend {
-    min-width: 60px;
-  }
 }
 </style> 
