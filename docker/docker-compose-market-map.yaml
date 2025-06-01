@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  market-map-init:
+    image: postgres:15-alpine
+    volumes:
+      - ../db-sample-data/market-events-map-init.sql:/docker-entrypoint-initdb.d/market-events-map-init.sql:ro
+    environment:
+      PGPASSWORD: password
+    command: |
+      sh -c "
+        echo '🚀 開始配置市集活動地圖...'
+        sleep 3
+        psql -h postgres-data -U postgres -d dashboardmanager -f /docker-entrypoint-initdb.d/market-events-map-init.sql
+        echo '✅ 市集活動地圖配置完成！'
+        echo '📍 地圖將顯示紅色圓點標示各市集位置'
+        echo '💡 請重啟後端服務並重新整理前端頁面'
+      "
+    networks:
+      - br_dashboard
+
+networks:
+  br_dashboard:
+    external: true 
