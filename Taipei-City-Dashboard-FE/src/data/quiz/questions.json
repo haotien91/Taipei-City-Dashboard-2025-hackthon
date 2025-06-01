@@ -1,0 +1,255 @@
+{
+	"version": "2.0",
+	"lastUpdated": "2024-12-19",
+	"metadata": {
+		"title": "找到你的台北商圈靈魂伴侶",
+		"totalQuestions": 4,
+		"maxDepth": 4,
+		"totalPaths": 16
+	},
+	"questions": {
+		"q1": {
+			"id": "q1",
+			"level": 1,
+			"text": "朋友突然約你出門",
+			"subtitle": "你的第一反應是...?",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "day",
+					"text": "白天走走好啊！",
+					"emoji": "☀️",
+					"description": "陽光正好，出去曬曬太陽",
+					"nextQuestionId": "q2a"
+				},
+				{
+					"id": "night",
+					"text": "晚上比較有fu~",
+					"emoji": "🌙",
+					"description": "夜生活才是重點！",
+					"nextQuestionId": "q2b"
+				}
+			]
+		},
+		"q2a": {
+			"id": "q2a",
+			"level": 2,
+			"parentAnswer": "day",
+			"text": "既然是白天，你最想...",
+			"subtitle": "選一個最吸引你的！",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "shopping",
+					"text": "買！買！買！",
+					"emoji": "🛍️",
+					"description": "購物療法啟動！",
+					"nextQuestionId": "q3a1"
+				},
+				{
+					"id": "culture",
+					"text": "當個文化人",
+					"emoji": "🏛️",
+					"description": "古蹟老街散散步",
+					"nextQuestionId": "q3a2"
+				},
+				{
+					"id": "nature",
+					"text": "遠離都市叢林",
+					"emoji": "🌿",
+					"description": "找個清靜地方發呆",
+					"nextQuestionId": "q3a3"
+				}
+			]
+		},
+		"q2b": {
+			"id": "q2b",
+			"level": 2,
+			"parentAnswer": "night",
+			"text": "夜晚模式，你想要...",
+			"subtitle": "今晚的主題是？",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "food",
+					"text": "吃遍天下美食！",
+					"emoji": "🍜",
+					"description": "夜市小吃衝一波",
+					"nextQuestionId": "q3b1"
+				},
+				{
+					"id": "drinks",
+					"text": "來杯調酒放鬆",
+					"emoji": "🍸",
+					"description": "微醺是今晚的關鍵字",
+					"nextQuestionId": "q3b2"
+				},
+				{
+					"id": "chill",
+					"text": "悠閒地到處走走",
+					"emoji": "🚶‍♀️",
+					"description": "散步看夜景就很棒",
+					"nextQuestionId": "q3b3"
+				}
+			]
+		},
+		"q3a1": {
+			"id": "q3a1",
+			"level": 3,
+			"parentAnswer": "shopping",
+			"text": "購物時，你的消費哲學是？",
+			"subtitle": "誠實面對你的錢包吧...",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "luxury",
+					"text": "要買就買最好的",
+					"emoji": "💎",
+					"description": "質感至上，品味無價",
+					"nextQuestionId": "result_H"
+				},
+				{
+					"id": "smart",
+					"text": "CP值才是王道",
+					"emoji": "🧠",
+					"description": "聰明消費，挖到寶最爽",
+					"nextQuestionId": "result_L"
+				}
+			]
+		},
+		"q3a2": {
+			"id": "q3a2",
+			"level": 3,
+			"parentAnswer": "culture",
+			"text": "你比較被哪種故事吸引？",
+			"subtitle": "說到底，你是哪一派？",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "history",
+					"text": "百年老故事",
+					"emoji": "📜",
+					"description": "古蹟廟宇有溫度",
+					"nextQuestionId": "result_O"
+				},
+				{
+					"id": "creative",
+					"text": "新世代創意",
+					"emoji": "🎨",
+					"description": "文創小店有個性",
+					"nextQuestionId": "result_N"
+				}
+			]
+		},
+		"q3a3": {
+			"id": "q3a3",
+			"level": 3,
+			"parentAnswer": "nature",
+			"text": "你的療癒方式是？",
+			"subtitle": "充電模式啟動！",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "hotspring",
+					"text": "泡溫泉最舒服",
+					"emoji": "♨️",
+					"description": "熱水療癒身心靈",
+					"nextQuestionId": "result_S"
+				},
+				{
+					"id": "tea",
+					"text": "喝茶看風景",
+					"emoji": "🍵",
+					"description": "品茗賞景最風雅",
+					"nextQuestionId": "result_T"
+				}
+			]
+		},
+		"q3b1": {
+			"id": "q3b1",
+			"level": 3,
+			"parentAnswer": "food",
+			"text": "夜市美食，你偏愛？",
+			"subtitle": "選擇困難症發作中...",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "famous",
+					"text": "網紅必吃清單",
+					"emoji": "📸",
+					"description": "觀光客路線也無妨",
+					"nextQuestionId": "result_M"
+				},
+				{
+					"id": "local",
+					"text": "巷仔內隱藏版",
+					"emoji": "🔍",
+					"description": "在地人才知道的好味道",
+					"nextQuestionId": "result_P"
+				}
+			]
+		},
+		"q3b2": {
+			"id": "q3b2",
+			"level": 3,
+			"parentAnswer": "drinks",
+			"text": "今晚想要什麼氛圍？",
+			"subtitle": "微醺的心情是...",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "japanese",
+					"text": "日式居酒屋",
+					"emoji": "🏮",
+					"description": "溫暖燈籠下小酌",
+					"nextQuestionId": "result_J"
+				},
+				{
+					"id": "modern",
+					"text": "時尚酒吧",
+					"emoji": "🍹",
+					"description": "DJ音樂配調酒",
+					"nextQuestionId": "result_K"
+				}
+			]
+		},
+		"q3b3": {
+			"id": "q3b3",
+			"level": 3,
+			"parentAnswer": "chill",
+			"text": "夜晚散步，你想感受？",
+			"subtitle": "今晚的心情是...",
+			"type": "single_choice",
+			"options": [
+				{
+					"id": "nostalgic",
+					"text": "老城區的故事",
+					"emoji": "🏮",
+					"description": "古早味的夜晚時光",
+					"nextQuestionId": "result_R"
+				},
+				{
+					"id": "romantic",
+					"text": "都會的浪漫",
+					"emoji": "✨",
+					"description": "摩天輪夜景配咖啡",
+					"nextQuestionId": "result_Q"
+				}
+			]
+		}
+	},
+	"pathMapping": {
+		"day->shopping->luxury": "H",
+		"day->shopping->budget": "L",
+		"day->culture->old": "O",
+		"day->culture->modern": "N",
+		"day->nature->hotspring": "S",
+		"day->nature->tea": "T",
+		"night->food->famous": "M",
+		"night->food->local": "P",
+		"night->nightlife->japanese": "J",
+		"night->nightlife->trendy": "K",
+		"night->walk->nostalgic": "R",
+		"night->walk->modern": "Q"
+	}
+}

@@ -1,0 +1,185 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-06-01",
+  "config": {
+    "basic": {
+      "title": "台北商圈心理測驗",
+      "subtitle": "4個問題找到最適合你的商圈",
+      "description": "回答直覺問題，3秒配對今天最適合的台北商圈！",
+      "estimatedTime": "1分鐘",
+      "totalQuestions": 4,
+      "startQuestionId": "q1",
+      "author": "台北城市儀表板團隊",
+      "version": "1.0"
+    },
+    "analytics": {
+      "trackUserFlow": true,
+      "trackResults": true,
+      "trackTimeSpent": true,
+      "enableHeatmap": false,
+      "gaTrackingId": "GA_TRACKING_ID",
+      "events": {
+        "quiz_start": "quiz_started",
+        "question_answered": "question_answered",
+        "quiz_completed": "quiz_completed",
+        "result_shared": "result_shared",
+        "district_clicked": "district_detail_viewed"
+      }
+    },
+    "ui": {
+      "theme": {
+        "name": "taipei-night",
+        "primaryColor": "#2D3748",
+        "secondaryColor": "#4A5568",
+        "accentColor": "#3182CE",
+        "textColor": "#1A202C",
+        "backgroundColor": "#F7FAFC"
+      },
+      "animations": {
+        "questionTransition": "slide",
+        "duration": 300,
+        "easing": "ease-out",
+        "enableReducedMotion": true
+      },
+      "progressBar": {
+        "style": "dots",
+        "position": "top",
+        "showPercentage": false,
+        "color": "#3182CE"
+      },
+      "buttons": {
+        "style": "rounded",
+        "size": "large",
+        "hapticFeedback": true
+      },
+      "layout": {
+        "maxWidth": "600px",
+        "spacing": "comfortable",
+        "borderRadius": "12px"
+      }
+    },
+    "features": {
+      "allowBackNavigation": true,
+      "autoSave": false,
+      "requireAllAnswers": true,
+      "enableShare": true,
+      "enableRetake": true,
+      "showProgress": true,
+      "enableSkip": false,
+      "timeLimit": null
+    },
+    "integration": {
+      "connectToMap": true,
+      "connectToWeather": false,
+      "connectToRealTimeData": false,
+      "enableGeolocation": false,
+      "mapProvider": "mapbox",
+      "socialShare": {
+        "platforms": ["facebook", "twitter", "line", "instagram"],
+        "hashtags": ["台北商圈", "心理測驗", "台北旅遊"],
+        "enableCustomMessage": true
+      }
+    },
+    "content": {
+      "introScreen": {
+        "showIntro": true,
+        "heroImage": "/images/quiz/taipei-skyline.jpg",
+        "welcomeMessage": "發現你的專屬台北商圈",
+        "instructions": [
+          "回答4個簡單問題",
+          "獲得個人化商圈推薦",
+          "探索台北隱藏魅力"
+        ],
+        "startButtonText": "開始測驗"
+      },
+      "questionScreen": {
+        "showQuestionNumber": true,
+        "showSubtitle": true,
+        "showDescription": true,
+        "buttonStyle": "card",
+        "maxOptionsPerRow": 2
+      },
+      "resultScreen": {
+        "showPersonalityAnalysis": true,
+        "showTagline": true,
+        "showAllDistricts": true,
+        "enableDistrictComparison": false,
+        "showNextSteps": true
+      },
+      "shareScreen": {
+        "enableCustomization": true,
+        "templates": {
+          "default": "我測出來是{title}！推薦去{district}逛逛 🎯 #台北商圈心理測驗",
+          "detailed": "心理測驗結果：{title} - {tagline} 最適合的商圈是{district}！",
+          "simple": "發現我的台北商圈是{district}！"
+        }
+      }
+    },
+    "texts": {
+      "common": {
+        "next": "下一題",
+        "previous": "上一題",
+        "submit": "提交答案",
+        "restart": "🔄 重新測驗",
+        "share": "📤 分享結果",
+        "viewOnMap": "📍 在地圖上查看",
+        "viewDetails": "查看詳細資訊",
+        "close": "關閉",
+        "loading": "載入中...",
+        "error": "發生錯誤，請稍後再試"
+      },
+      "navigation": {
+        "backToQuestions": "回到測驗",
+        "backToResults": "回到結果",
+        "goToHome": "回到首頁"
+      },
+      "results": {
+        "yourType": "你的類型",
+        "personalityAnalysis": "性格分析",
+        "recommendedDistricts": "推薦商圈",
+        "whyThisResult": "為什麼是這個結果？",
+        "exploreMore": "探索更多商圈",
+        "planYourTrip": "規劃你的行程"
+      },
+      "sharing": {
+        "shareTitle": "分享你的測驗結果",
+        "shareDescription": "讓朋友也來測測看！",
+        "copyLink": "複製連結",
+        "linkCopied": "連結已複製！"
+      },
+      "errors": {
+        "loadFailed": "測驗載入失敗",
+        "submitFailed": "提交失敗，請重試",
+        "networkError": "網路連線錯誤",
+        "dataCorrupted": "資料損壞，請重新開始"
+      }
+    },
+    "accessibility": {
+      "enableScreenReader": true,
+      "enableKeyboardNavigation": true,
+      "enableHighContrast": false,
+      "fontSize": "normal",
+      "announcements": {
+        "questionChanged": "問題已切換到第{number}題",
+        "answerSelected": "已選擇答案：{answer}",
+        "quizCompleted": "測驗完成，正在顯示結果",
+        "resultDisplayed": "你的結果是：{title}"
+      }
+    },
+    "performance": {
+      "lazyLoadImages": true,
+      "preloadNextQuestion": true,
+      "cacheResults": true,
+      "cacheTimeout": 3600000,
+      "enableServiceWorker": false,
+      "compressionLevel": "medium"
+    },
+    "debugging": {
+      "enableConsoleLog": false,
+      "enableDebugPanel": false,
+      "showTimingInfo": false,
+      "allowDirectResult": false,
+      "testMode": false
+    }
+  }
+}

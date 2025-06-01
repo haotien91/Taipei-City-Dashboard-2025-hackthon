@@ -1,0 +1,346 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-06-01",
+  "results": {
+    "H": {
+      "resultCode": "H",
+      "title": "質感生活家",
+      "userEvaluation": {
+        "personality": "你是追求品味與格調的人",
+        "traits": ["注重質感", "喜愛精品", "品味優雅"],
+        "description": "你懂得欣賞美好事物，願意為質感付費，追求生活的精緻與優雅。購物對你來說不只是消費，更是一種生活態度的展現。"
+      },
+      "tagline": "國際精品林立，刷卡不手軟！",
+      "districts": [
+        {
+          "id": "xinyi",
+          "name": "信義商圈",
+          "image": "/images/results/xinyi-cover.jpg",
+          "description": "台北的時尚心臟，國際精品與摩天大樓的完美結合",
+          "highlights": ["台北101", "各大精品店", "高級餐廳"]
+        },
+        {
+          "id": "dongqu",
+          "name": "東區商圈",
+          "image": "/images/results/dongqu-cover.jpg",
+          "description": "潮流發源地，巷弄間隱藏著無數時尚驚喜",
+          "highlights": ["SOGO百貨", "潮流選物店", "個性咖啡廳"]
+        }
+      ]
+    },
+    "L": {
+      "resultCode": "L",
+      "title": "精明消費達人",
+      "userEvaluation": {
+        "personality": "你是聰明理性的消費者",
+        "traits": ["精打細算", "眼光獨到", "挖寶高手"],
+        "description": "你善於發現物超所值的好東西，享受在有限預算內找到心頭好的成就感。對你來說，聰明消費比盲目消費更有樂趣。"
+      },
+      "tagline": "巷弄撿好貨，荷包也能笑",
+      "districts": [
+        {
+          "id": "wufenpu",
+          "name": "五分埔商圈",
+          "image": "/images/results/wufenpu-cover.jpg",
+          "description": "批發零售天堂，款式多樣價格親民",
+          "highlights": ["服飾批發", "平價好貨", "款式豐富"]
+        },
+        {
+          "id": "huayin",
+          "name": "華陰街商圈",
+          "image": "/images/results/huayin-cover.jpg",
+          "description": "台北後站的購物秘境，挖寶族的最愛",
+          "highlights": ["二手精品", "復古小物", "平價美食"]
+        },
+        {
+          "id": "shilin_shopping",
+          "name": "士林夜市周邊",
+          "image": "/images/results/shilin-shopping-cover.jpg",
+          "description": "夜市旁的購物小巷，年輕人的挖寶天地",
+          "highlights": ["年輕潮牌", "創意小物", "學生價位"]
+        }
+      ]
+    },
+    "O": {
+      "resultCode": "O",
+      "title": "文化探索者",
+      "userEvaluation": {
+        "personality": "你對歷史文化有著深深的眷戀",
+        "traits": ["懷古情懷", "文化素養", "慢活主義"],
+        "description": "你喜歡在古老的街道中漫步，感受歷史的痕跡，享受時光靜止的美好。每個古蹟對你來說都是一本活歷史書。"
+      },
+      "tagline": "走進時光隧道，老屋×老味等你",
+      "districts": [
+        {
+          "id": "dihua",
+          "name": "迪化街商圈",
+          "image": "/images/results/dihua-cover.jpg",
+          "description": "百年老街的韻味，傳統與現代的完美融合",
+          "highlights": ["歷史建築", "傳統商行", "文創小店"]
+        },
+        {
+          "id": "dalongdong",
+          "name": "大龍峒商圈",
+          "image": "/images/results/dalongdong-cover.jpg",
+          "description": "台北最古老的市街之一，廟宇文化深厚",
+          "highlights": ["保安宮", "古蹟巡禮", "傳統小吃"]
+        }
+      ]
+    },
+    "N": {
+      "resultCode": "N",
+      "title": "文青生活家",
+      "userEvaluation": {
+        "personality": "你是熱愛創意與美學的文藝青年",
+        "traits": ["創意思維", "美學眼光", "獨立精神"],
+        "description": "你喜歡獨特的事物，享受在小眾店家發現驚喜，追求有故事的生活體驗。咖啡香與書香是你的最愛。"
+      },
+      "tagline": "慢步咖啡＋選物，小確幸滿點",
+      "districts": [
+        {
+          "id": "chifeng",
+          "name": "赤峰街商圈",
+          "image": "/images/results/chifeng-cover.jpg",
+          "description": "老城區的文青聚落，創意小店林立",
+          "highlights": ["獨立咖啡廳", "選物店", "工業風裝潢"]
+        },
+        {
+          "id": "zhongshan",
+          "name": "中山商圈",
+          "image": "/images/results/zhongshan-cover.jpg",
+          "description": "都會文青的秘密基地，巷弄美學的代表",
+          "highlights": ["設計旅店", "藝文空間", "質感餐廳"]
+        },
+        {
+          "id": "siping",
+          "name": "四平陽光商圈",
+          "image": "/images/results/siping-cover.jpg",
+          "description": "松山區的文創聚落，年輕設計師的天地",
+          "highlights": ["新銳設計師", "手作工坊", "小眾品牌"]
+        }
+      ]
+    },
+    "S": {
+      "resultCode": "S",
+      "title": "療癒系旅人",
+      "userEvaluation": {
+        "personality": "你懂得照顧自己，追求身心的放鬆與療癒",
+        "traits": ["注重養生", "愛好放鬆", "療癒系"],
+        "description": "你知道適時放慢腳步的重要性，享受溫泉帶來的舒緩，重視生活的品質勝過速度。自我照護是你的人生哲學。"
+      },
+      "tagline": "泡泉去，身心都重開機",
+      "districts": [
+        {
+          "id": "beitou",
+          "name": "新北投溫泉區",
+          "image": "/images/results/beitou-cover.jpg",
+          "description": "台北的溫泉鄉，日式風情濃厚",
+          "highlights": ["溫泉會館", "北投公園", "地熱谷"]
+        },
+        {
+          "id": "xingiyi",
+          "name": "行義路溫泉區",
+          "image": "/images/results/xingiyi-cover.jpg",
+          "description": "隱身山間的溫泉秘境，遠離塵囂",
+          "highlights": ["私湯享受", "山景溫泉", "寧靜環境"]
+        }
+      ]
+    },
+    "T": {
+      "resultCode": "T",
+      "title": "山景品茗師",
+      "userEvaluation": {
+        "personality": "你是追求寧靜致遠的雅士",
+        "traits": ["品味清雅", "享受慢活", "親近自然"],
+        "description": "你喜歡在山景中品茗論道，享受茶香與自然和諧共處的悠閒時光。對你來說，慢下來才能品味生活的真諦。"
+      },
+      "tagline": "邊啜烏龍邊看萬家燈火",
+      "districts": [
+        {
+          "id": "maokong",
+          "name": "貓空商圈",
+          "image": "/images/results/maokong-cover.jpg",
+          "description": "台北的後花園，茶香與夜景的完美結合",
+          "highlights": ["茶園風光", "台北夜景", "纜車體驗"]
+        }
+      ]
+    },
+    "M": {
+      "resultCode": "M",
+      "title": "美食獵人",
+      "userEvaluation": {
+        "personality": "你是熱愛探索美食的饕客",
+        "traits": ["味覺敏銳", "勇於嘗試", "美食達人"],
+        "description": "你對美食有著無限的熱情，喜歡在熱鬧的夜市中尋找令人驚艷的小吃。每一道料理都是你的冒險，每一口都是新發現。"
+      },
+      "tagline": "觀光客必吃榜，一次攻略",
+      "districts": [
+        {
+          "id": "shilin",
+          "name": "士林夜市",
+          "image": "/images/results/shilin-cover.jpg",
+          "description": "台北最著名的夜市，美食種類應有盡有",
+          "highlights": ["豪大大雞排", "蚵仔煎", "雪花冰"]
+        },
+        {
+          "id": "ximending",
+          "name": "西門町徒步區",
+          "image": "/images/results/ximending-cover.jpg",
+          "description": "年輕人的美食天堂，創新小吃聚集地",
+          "highlights": ["創意小吃", "手搖飲", "異國料理"]
+        },
+        {
+          "id": "raohe",
+          "name": "饒河夜市",
+          "image": "/images/results/raohe-cover.jpg",
+          "description": "老台北的夜市風情，傳統小吃的故鄉",
+          "highlights": ["胡椒餅", "藥燉排骨", "麻辣臭豆腐"]
+        }
+      ]
+    },
+    "P": {
+      "resultCode": "P",
+      "title": "在地美食通",
+      "userEvaluation": {
+        "personality": "你是深諳在地美味的老饕",
+        "traits": ["在地情懷", "人情味重", "隱藏版達人"],
+        "description": "你偏愛有人情味的小店，享受與老闆閒聊的溫暖，追求最道地的台灣味。對你來說，美食不只是味覺享受，更是情感連結。"
+      },
+      "tagline": "人情味＋銅板價，老饕口袋地",
+      "districts": [
+        {
+          "id": "nanjichang",
+          "name": "南機場夜市",
+          "image": "/images/results/nanjichang-cover.jpg",
+          "description": "在地人的深夜食堂，庶民美食的天堂",
+          "highlights": ["臭豆腐", "滷味攤", "古早味"]
+        },
+        {
+          "id": "yansan",
+          "name": "延三夜市",
+          "image": "/images/results/yansan-cover.jpg",
+          "description": "台北最有歷史的夜市之一，老台北的味道",
+          "highlights": ["大腸煎", "筒仔米糕", "四神湯"]
+        },
+        {
+          "id": "ningxia",
+          "name": "寧夏夜市",
+          "image": "/images/results/ningxia-cover.jpg",
+          "description": "精緻小夜市，每攤都是經典老店",
+          "highlights": ["雙連圓仔湯", "劉芋仔", "豬肝湯"]
+        }
+      ]
+    },
+    "J": {
+      "resultCode": "J",
+      "title": "和風夜遊者",
+      "userEvaluation": {
+        "personality": "你喜歡精緻的日式文化與微醺的夜晚",
+        "traits": ["日系風格", "精緻品味", "夜貓族"],
+        "description": "你被日式文化深深吸引，享受在居酒屋中與三五好友小酌談天的愜意時光。對你來說，夜晚的儀式感很重要。"
+      },
+      "tagline": "微醺霓虹，迷你東京 in 台北",
+      "districts": [
+        {
+          "id": "tiaotong",
+          "name": "條通商圈",
+          "image": "/images/results/tiaotong-cover.jpg",
+          "description": "台北的小東京，濃濃日式風情",
+          "highlights": ["日式居酒屋", "卡拉OK", "日本料理"]
+        },
+        {
+          "id": "chifeng_night",
+          "name": "赤峰街夜生活",
+          "image": "/images/results/chifeng-night-cover.jpg",
+          "description": "隱身巷弄的日系酒吧，低調而有格調",
+          "highlights": ["隱密酒吧", "日式調酒", "深夜食堂"]
+        }
+      ]
+    },
+    "K": {
+      "resultCode": "K",
+      "title": "夜生活玩家",
+      "userEvaluation": {
+        "personality": "你是熱愛夜生活的潮流先鋒",
+        "traits": ["潮流敏感", "夜貓族", "社交達人"],
+        "description": "你喜歡在燈紅酒綠的夜晚中釋放自己，享受音樂與酒精帶來的快樂。夜晚是你的舞台，你是夜色中最亮的星。"
+      },
+      "tagline": "質感酒單＋DJ Beat，夜不打烊",
+      "districts": [
+        {
+          "id": "dongqu_night",
+          "name": "東區夜生活",
+          "image": "/images/results/dongqu-night-cover.jpg",
+          "description": "台北夜生活的經典地標，酒吧林立",
+          "highlights": ["時尚酒吧", "夜店", "調酒文化"]
+        },
+        {
+          "id": "xinyi_night",
+          "name": "信義夜生活",
+          "image": "/images/results/xinyi-night-cover.jpg",
+          "description": "國際化的夜生活體驗，高端酒吧聚集",
+          "highlights": ["景觀酒吧", "Lounge Bar", "夜景"]
+        }
+      ]
+    },
+    "R": {
+      "resultCode": "R",
+      "title": "懷舊漫步者",
+      "userEvaluation": {
+        "personality": "你是沉浸在老城故事中的浪漫主義者",
+        "traits": ["懷舊情懷", "慢活節奏", "故事收集者"],
+        "description": "你喜歡在古老的街道中慢慢走，聆聽每個角落的故事，感受時間的痕跡。夜晚的古街對你來說別有一番風情。"
+      },
+      "tagline": "昏黃燈下走讀艋舺故事",
+      "districts": [
+        {
+          "id": "wanhua",
+          "name": "艋舺老街",
+          "image": "/images/results/wanhua-cover.jpg",
+          "description": "台北最古老的街區，充滿歷史故事",
+          "highlights": ["龍山寺", "青草巷", "老街風情"]
+        },
+        {
+          "id": "wanhua_night",
+          "name": "萬華夜間街區",
+          "image": "/images/results/wanhua-night-cover.jpg",
+          "description": "夜晚的萬華別有一番風情，霓虹與古蹟交織",
+          "highlights": ["夜間古蹟", "老店夜景", "街頭藝術"]
+        }
+      ]
+    },
+    "Q": {
+      "resultCode": "Q",
+      "title": "都會浪漫主義者",
+      "userEvaluation": {
+        "personality": "你追求現代都會的浪漫與精緻",
+        "traits": ["浪漫主義", "都會感", "約會達人"],
+        "description": "你喜歡在現代化的環境中創造浪漫時刻，享受都市夜晚的璀璨與溫柔。對你來說，城市的每個角落都充滿浪漫可能。"
+      },
+      "tagline": "摩天輪或林蔭道，約會感拉滿",
+      "districts": [
+        {
+          "id": "dazhi",
+          "name": "大直美麗華",
+          "image": "/images/results/dazhi-cover.jpg",
+          "description": "摩天輪下的浪漫約會聖地",
+          "highlights": ["美麗華摩天輪", "河濱公園", "約會餐廳"]
+        },
+        {
+          "id": "minsheng",
+          "name": "民生社區",
+          "image": "/images/results/minsheng-cover.jpg",
+          "description": "台北的小歐洲，綠意盎然的住宅區",
+          "highlights": ["林蔭大道", "咖啡廳", "生活感"]
+        },
+        {
+          "id": "tianmu",
+          "name": "天母商圈",
+          "image": "/images/results/tianmu-cover.jpg",
+          "description": "異國風情濃厚，高質感生活圈",
+          "highlights": ["異國餐廳", "精品店", "悠閒氛圍"]
+        }
+      ]
+    }
+  }
+}
